@@ -1,0 +1,4239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java & Spring Boot Interview Preparation Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        header h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .search-box {
+            margin: 20px 0;
+            padding: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 12px 25px;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .question-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-header h3 {
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .toggle-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .question-card.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .answer-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .question-card.active .answer-content {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .answer-content p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .answer-content ul, .answer-content ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .answer-content li {
+            margin-bottom: 8px;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border-left: 4px solid #667eea;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .code-block .keyword {
+            color: #ff79c6;
+        }
+
+        .code-block .string {
+            color: #f1fa8c;
+        }
+
+        .code-block .comment {
+            color: #6272a4;
+        }
+
+        .code-block .annotation {
+            color: #8be9fd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .category-nav {
+                flex-direction: column;
+            }
+
+            .category-btn {
+                width: 100%;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .code-block {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 Java & Spring Boot Interview Preparation Guide</h1>
+            <p>Comprehensive collection of interview questions with detailed answers and code examples</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search questions, topics, or keywords...">
+            </div>
+        </header>
+
+        <nav class="category-nav">
+            <button class="category-btn active" data-category="all">All Topics</button>
+            <button class="category-btn" data-category="core-java">Core Java</button>
+            <button class="category-btn" data-category="java8">Java 8+</button>
+            <button class="category-btn" data-category="spring-boot">Spring Boot</button>
+            <button class="category-btn" data-category="spring-security">Spring Security</button>
+            <button class="category-btn" data-category="microservices">Microservices</button>
+            <button class="category-btn" data-category="database">Database</button>
+            <button class="category-btn" data-category="design-patterns">Design Patterns</button>
+            <button class="category-btn" data-category="sql">SQL</button>
+            <button class="category-btn" data-category="stored-procedures">Stored Procedures</button>
+        </nav>
+
+        <!-- Core Java Section -->
+        <section class="section" data-category="core-java">
+            <h2>Core Java</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Inheritance?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Inheritance is a mechanism by which one object acquires all the properties and behavior of another object of another class. It is used for Code Reusability and Method Overriding. Inheritance represents the IS-A relationship (parent-child relationship).</p>
+                    <div class="code-block">
+<span class="keyword">class</span> Animal {
+    <span class="keyword">void</span> sound() {
+        System.out.println(<span class="string">"Animal makes a sound"</span>);
+    }
+}
+
+<span class="keyword">class</span> Cat <span class="keyword">extends</span> Animal {
+    <span class="annotation">@Override</span>
+    <span class="keyword">void</span> sound() {
+        System.out.println(<span class="string">"Cat meows"</span>);
+    }
+}
+
+<span class="keyword">public class</span> TestOverride {
+    <span class="keyword">public static void</span> main(String[] args) {
+        Animal a = <span class="keyword">new</span> Cat();
+        a.sound();  <span class="comment">// Calls overridden method in Cat</span>
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Polymorphism?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Polymorphism in Java is a concept by which we can perform a single action in different ways. It is derived from Greek words: poly (many) and morphs (forms). We can achieve polymorphism through method overloading and method overriding.</p>
+
+                    <p><strong>Method Overloading:</strong> Multiple methods with the same name but different signatures (different number, type, or order of parameters).</p>
+                    <div class="code-block">
+<span class="keyword">class</span> Calculator {
+    <span class="keyword">int</span> sum(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">return</span> a + b;
+    }
+
+    <span class="keyword">int</span> sum(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) {
+        <span class="keyword">return</span> a + b + c;
+    }
+
+    <span class="keyword">double</span> sum(<span class="keyword">double</span> a, <span class="keyword">double</span> b) {
+        <span class="keyword">return</span> a + b;
+    }
+}
+                    </div>
+
+                    <p><strong>Method Overriding:</strong> Subclass provides a specific implementation of a method already defined in its superclass.</p>
+                    <div class="code-block">
+<span class="keyword">class</span> Vehicle {
+    <span class="keyword">void</span> run() {
+        System.out.println(<span class="string">"Vehicle is running"</span>);
+    }
+}
+
+<span class="keyword">class</span> Bike <span class="keyword">extends</span> Vehicle {
+    <span class="annotation">@Override</span>
+    <span class="keyword">void</span> run() {
+        System.out.println(<span class="string">"Bike is running safely"</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Abstraction?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Abstraction is a process of hiding the implementation details and showing only functionality to the user. It displays just the essential things and hides internal information. In Java, abstraction can be achieved through:</p>
+                    <ul>
+                        <li><strong>Abstract Class:</strong> Cannot be instantiated, can have both abstract and non-abstract methods</li>
+                        <li><strong>Interface:</strong> Only abstract methods (prior to Java 8), used for multiple inheritance</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// Abstract Class Example</span>
+<span class="keyword">abstract class</span> Shape {
+    <span class="keyword">abstract</span> <span class="keyword">void</span> draw();
+
+    <span class="keyword">void</span> resize() {
+        System.out.println(<span class="string">"Resizing shape"</span>);
+    }
+}
+
+<span class="keyword">class</span> Circle <span class="keyword">extends</span> Shape {
+    <span class="annotation">@Override</span>
+    <span class="keyword">void</span> draw() {
+        System.out.println(<span class="string">"Drawing Circle"</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Encapsulation?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Encapsulation is a process of wrapping code and data together into a single unit. It involves:</p>
+                    <ul>
+                        <li>Private variables (data hiding)</li>
+                        <li>Public getters/setters for controlled access</li>
+                        <li>Validation logic in setters</li>
+                    </ul>
+                    <div class="code-block">
+<span class="keyword">class</span> Student {
+    <span class="keyword">private</span> String name;
+    <span class="keyword">private int</span> age;
+
+    <span class="keyword">public</span> String getName() {
+        <span class="keyword">return</span> name;
+    }
+
+    <span class="keyword">public void</span> setName(String name) {
+        <span class="keyword">this</span>.name = name;
+    }
+
+    <span class="keyword">public int</span> getAge() {
+        <span class="keyword">return</span> age;
+    }
+
+    <span class="keyword">public void</span> setAge(<span class="keyword">int</span> age) {
+        <span class="keyword">if</span> (age > 0) {
+            <span class="keyword">this</span>.age = age;
+        }
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between HashMap and ConcurrentHashMap?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>HashMap</th>
+                            <th>ConcurrentHashMap</th>
+                        </tr>
+                        <tr>
+                            <td>Thread Safety</td>
+                            <td>Not thread-safe</td>
+                            <td>Thread-safe</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Faster in single-threaded</td>
+                            <td>High performance in concurrent environments</td>
+                        </tr>
+                        <tr>
+                            <td>Null Keys/Values</td>
+                            <td>Allows one null key and multiple null values</td>
+                            <td>Does not allow null keys or values</td>
+                        </tr>
+                        <tr>
+                            <td>Iteration Behavior</td>
+                            <td>Fail-fast (throws ConcurrentModificationException)</td>
+                            <td>Fail-safe (does not throw exception)</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// ConcurrentHashMap Example</span>
+ConcurrentHashMap&lt;String, Integer&gt; map = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();
+
+Thread t1 = <span class="keyword">new</span> Thread(() -> map.put(<span class="string">"A"</span>, 1));
+Thread t2 = <span class="keyword">new</span> Thread(() -> map.put(<span class="string">"B"</span>, 2));
+t1.start();
+t2.start();
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>Can we print something without using main method?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Yes, we can use a static block to print without main method (though this may not work reliably in Java 7+):</p>
+                    <div class="code-block">
+<span class="keyword">class</span> Test {
+    <span class="keyword">static</span> {
+        System.out.println(<span class="string">"Hello, World!"</span>);
+        System.exit(0);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between ArrayList and Set?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>ArrayList</th>
+                            <th>Set</th>
+                        </tr>
+                        <tr>
+                            <td>Duplicates</td>
+                            <td>Allows duplicates</td>
+                            <td>Does not allow duplicates</td>
+                        </tr>
+                        <tr>
+                            <td>Order</td>
+                            <td>Maintains insertion order</td>
+                            <td>Does not guarantee order</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Faster for indexed access</td>
+                            <td>Faster for unique lookups</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Reflection in Java?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Reflection allows us to inspect and modify classes, methods, and fields at runtime.</p>
+                    <div class="code-block">
+<span class="keyword">import</span> java.lang.reflect.Method;
+
+<span class="keyword">public class</span> Demo {
+    <span class="keyword">public void</span> sayHello() {
+        System.out.println(<span class="string">"Hello from Reflection!"</span>);
+    }
+
+    <span class="keyword">public static void</span> main(String[] args) <span class="keyword">throws</span> Exception {
+        Class&lt;?&gt; clazz = Demo.<span class="keyword">class</span>;
+        Method method = clazz.getMethod(<span class="string">"sayHello"</span>);
+        Object obj = clazz.getDeclaredConstructor().newInstance();
+        method.invoke(obj);
+    }
+}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Java 8+ Section -->
+        <section class="section" data-category="java8">
+            <h2>Java 8+ Features</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are Lambda Expressions?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Lambda expressions provide a clear and concise way to represent a method of a functional interface using an expression. They express an instance of a functional interface.</p>
+                    <div class="code-block">
+<span class="comment">// No parameter lambda</span>
+<span class="annotation">@FunctionalInterface</span>
+<span class="keyword">interface</span> Greet {
+    <span class="keyword">void</span> sayHello();
+}
+
+Greet greet = () -> System.out.println(<span class="string">"Hello, Umesh!"</span>);
+greet.sayHello();
+
+<span class="comment">// Single parameter lambda</span>
+<span class="annotation">@FunctionalInterface</span>
+<span class="keyword">interface</span> GreetUser {
+    <span class="keyword">void</span> sayHello(String name);
+}
+
+GreetUser greetUser = (name) -> System.out.println(<span class="string">"Hello, "</span> + name + <span class="string">"!"</span>);
+greetUser.sayHello(<span class="string">"Umesh"</span>);
+
+<span class="comment">// Multiple parameters lambda</span>
+<span class="annotation">@FunctionalInterface</span>
+<span class="keyword">interface</span> AddNumbers {
+    <span class="keyword">int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b);
+}
+
+AddNumbers add = (a, b) -> a + b;
+System.out.println(<span class="string">"Sum: "</span> + add.add(5, 10));
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are Functional Interfaces?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A functional interface is an interface with exactly one abstract method. It can have any number of default and static methods.</p>
+                    <div class="code-block">
+<span class="annotation">@FunctionalInterface</span>
+<span class="keyword">interface</span> MyInterface {
+    <span class="keyword">void</span> display();  <span class="comment">// Only one abstract method</span>
+
+    <span class="keyword">default</span> <span class="keyword">void</span> print() {
+        System.out.println(<span class="string">"Default method"</span>);
+    }
+
+    <span class="keyword">static</span> <span class="keyword">void</span> staticMethod() {
+        System.out.println(<span class="string">"Static method"</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are Method References?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Method references (::) are shorthand for lambda expressions that call existing methods.</p>
+                    <div class="code-block">
+<span class="keyword">import</span> java.util.Arrays;
+<span class="keyword">import</span> java.util.List;
+
+List&lt;String&gt; names = Arrays.asList(<span class="string">"Umesh"</span>, <span class="string">"Rahul"</span>, <span class="string">"Amit"</span>, <span class="string">"Nisha"</span>);
+
+<span class="comment">// Using method reference</span>
+names.forEach(System.out::println);
+
+<span class="comment">// Equivalent to lambda</span>
+names.forEach(n -> System.out.println(n));
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the Stream API?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Stream API is used to process collections of objects with functional style coding using lambda expressions.</p>
+                    <div class="code-block">
+<span class="keyword">import</span> java.util.*;
+<span class="keyword">import</span> java.util.stream.*;
+
+List&lt;Integer&gt; numbers = Arrays.asList(2, 6, 9, 4, 20);
+
+<span class="comment">// Filter even numbers</span>
+List&lt;Integer&gt; evenNumbers = numbers.stream()
+    .filter(i -> i % 2 == 0)
+    .collect(Collectors.toList());
+
+<span class="comment">// Map to uppercase</span>
+List&lt;String&gt; names = Arrays.asList(<span class="string">"umesh"</span>, <span class="string">"ravi"</span>, <span class="string">"neha"</span>);
+List&lt;String&gt; upperCaseNames = names.stream()
+    .map(String::toUpperCase)
+    .collect(Collectors.toList());
+
+<span class="comment">// Sort</span>
+List&lt;Integer&gt; sorted = numbers.stream()
+    .sorted()
+    .collect(Collectors.toList());
+
+<span class="comment">// Reduce (sum)</span>
+<span class="keyword">int</span> sum = numbers.stream()
+    .reduce(0, (a, b) -> a + b);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between filter and map in Stream API?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Function</th>
+                            <th>Purpose</th>
+                        </tr>
+                        <tr>
+                            <td>filter()</td>
+                            <td>Selects elements based on a condition</td>
+                        </tr>
+                        <tr>
+                            <td>map()</td>
+                            <td>Transforms each element</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+List&lt;String&gt; names = Arrays.asList(<span class="string">"John"</span>, <span class="string">"Jane"</span>, <span class="string">"Jack"</span>);
+
+<span class="comment">// filter - selects elements</span>
+names.stream()
+    .filter(name -> name.startsWith(<span class="string">"J"</span>))
+    .forEach(System.out::println);
+
+<span class="comment">// map - transforms elements</span>
+names.stream()
+    .map(String::toUpperCase)
+    .forEach(System.out::println);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are Default Methods in Interfaces?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Default methods in interfaces have a body (implementation). Introduced in Java 8 to add new methods to interfaces without breaking existing implementing classes.</p>
+                    <div class="code-block">
+<span class="keyword">public interface</span> Vehicle {
+    <span class="keyword">void</span> start();
+
+    <span class="comment">// Default method</span>
+    <span class="keyword">default void</span> stop() {
+        System.out.println(<span class="string">"Vehicle is stopping..."</span>);
+    }
+}
+
+<span class="keyword">public class</span> Car <span class="keyword">implements</span> Vehicle {
+    <span class="annotation">@Override</span>
+    <span class="keyword">public void</span> start() {
+        System.out.println(<span class="string">"Car is starting..."</span>);
+    }
+    <span class="comment">// Uses default stop() implementation</span>
+}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spring Boot Section -->
+        <section class="section" data-category="spring-boot">
+            <h2>Spring Boot</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Spring Boot and how is it different from Spring Framework?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Spring Boot is an extension of the Spring Framework that simplifies Java application development by eliminating boilerplate code and configuration.</p>
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Spring Framework</th>
+                            <th>Spring Boot</th>
+                        </tr>
+                        <tr>
+                            <td>Setup</td>
+                            <td>Requires manual configuration</td>
+                            <td>Provides auto-configuration</td>
+                        </tr>
+                        <tr>
+                            <td>Server</td>
+                            <td>Requires external servers</td>
+                            <td>Comes with embedded servers</td>
+                        </tr>
+                        <tr>
+                            <td>Deployment</td>
+                            <td>Generates WAR files</td>
+                            <td>Can create standalone JARs</td>
+                        </tr>
+                        <tr>
+                            <td>Dependencies</td>
+                            <td>Manual management</td>
+                            <td>Uses spring-boot-starter dependencies</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the purpose of @SpringBootApplication annotation?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@SpringBootApplication is a meta-annotation that combines three annotations:</p>
+                    <ul>
+                        <li><strong>@Configuration:</strong> Defines beans in the Spring context</li>
+                        <li><strong>@EnableAutoConfiguration:</strong> Automatically configures Spring components based on dependencies</li>
+                        <li><strong>@ComponentScan:</strong> Scans for components in the package and sub-packages</li>
+                    </ul>
+                    <div class="code-block">
+<span class="annotation">@SpringBootApplication</span>
+<span class="keyword">public class</span> MyApplication {
+    <span class="keyword">public static void</span> main(String[] args) {
+        SpringApplication.run(MyApplication.<span class="keyword">class</span>, args);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between @Component, @Service, and @Repository?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Annotation</th>
+                            <th>Purpose</th>
+                            <th>Where to Use</th>
+                        </tr>
+                        <tr>
+                            <td>@Component</td>
+                            <td>Generic Spring-managed component</td>
+                            <td>Any class that needs to be a Spring bean</td>
+                        </tr>
+                        <tr>
+                            <td>@Service</td>
+                            <td>Specialization for business logic</td>
+                            <td>Service layer classes</td>
+                        </tr>
+                        <tr>
+                            <td>@Repository</td>
+                            <td>Specialization for data access</td>
+                            <td>DAO classes interacting with database</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between @RestController and @Controller?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Annotation</th>
+                            <th>Purpose</th>
+                            <th>Returns</th>
+                            <th>Usage</th>
+                        </tr>
+                        <tr>
+                            <td>@Controller</td>
+                            <td>Handles web requests (MVC)</td>
+                            <td>View (HTML/JSP)</td>
+                            <td>Traditional web applications</td>
+                        </tr>
+                        <tr>
+                            <td>@RestController</td>
+                            <td>Simplifies REST API creation</td>
+                            <td>JSON/XML</td>
+                            <td>RESTful web services</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="annotation">@RestController</span>
+<span class="annotation">@RequestMapping</span>(<span class="string">"/api"</span>)
+<span class="keyword">public class</span> ApiController {
+    <span class="annotation">@GetMapping</span>(<span class="string">"/users"</span>)
+    <span class="keyword">public</span> List&lt;String&gt; getUsers() {
+        <span class="keyword">return</span> List.of(<span class="string">"Umesh"</span>, <span class="string">"Rahul"</span>, <span class="string">"Amit"</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the purpose of @Bean annotation?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@Bean is used to manually define and configure beans in Spring Boot. Unlike @Component, it's used for third-party classes or when custom initialization is needed.</p>
+                    <div class="code-block">
+<span class="annotation">@Configuration</span>
+<span class="keyword">public class</span> AppConfig {
+    <span class="annotation">@Bean</span>
+    <span class="keyword">public</span> DataSource dataSource() {
+        <span class="keyword">return new</span> HikariDataSource();
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between @Value and @ConfigurationProperties?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Annotation</th>
+                            <th>Purpose</th>
+                            <th>Scope</th>
+                        </tr>
+                        <tr>
+                            <td>@Value</td>
+                            <td>Injects single property value</td>
+                            <td>Single value</td>
+                        </tr>
+                        <tr>
+                            <td>@ConfigurationProperties</td>
+                            <td>Binds whole property groups into an object</td>
+                            <td>Multiple values (POJO)</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// Using @Value</span>
+<span class="annotation">@Value</span>(<span class="string">"${app.name}"</span>)
+<span class="keyword">private</span> String appName;
+
+<span class="comment">// Using @ConfigurationProperties</span>
+<span class="annotation">@Component</span>
+<span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"app"</span>)
+<span class="keyword">public class</span> AppProperties {
+    <span class="keyword">private</span> String name;
+    <span class="keyword">private</span> String version;
+    <span class="comment">// Getters and Setters</span>
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>How does @Transactional work in Spring Boot?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@Transactional ensures atomicity by wrapping a method in a transaction. If a method fails, all database changes inside it rollback automatically.</p>
+                    <div class="code-block">
+<span class="annotation">@Service</span>
+<span class="keyword">public class</span> UserService {
+    <span class="annotation">@Autowired</span>
+    <span class="keyword">private</span> UserRepository userRepository;
+
+    <span class="annotation">@Transactional</span>
+    <span class="keyword">public void</span> createUser(User user) {
+        userRepository.save(user);
+
+        <span class="keyword">if</span> (user.getName().isEmpty()) {
+            <span class="keyword">throw new</span> RuntimeException(<span class="string">"User name cannot be empty"</span>);
+        }
+    }
+}
+                    </div>
+                    <p><strong>Transaction Propagation Modes:</strong></p>
+                    <ul>
+                        <li>REQUIRED (default): Uses existing transaction or creates new one</li>
+                        <li>REQUIRES_NEW: Always creates new transaction</li>
+                        <li>MANDATORY: Requires existing transaction</li>
+                        <li>SUPPORTS: Runs within transaction if exists</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Dependency Injection?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Dependency Injection (DI) is a design pattern where dependencies are provided by the Spring framework instead of being manually created using the new keyword. It helps maintain loose coupling between classes.</p>
+                    <div class="code-block">
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> ServiceA {
+    <span class="keyword">public void</span> process() {
+        System.out.println(<span class="string">"Processing..."</span>);
+    }
+}
+
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> Consumer {
+    <span class="keyword">private final</span> ServiceA serviceA;
+
+    <span class="annotation">@Autowired</span>
+    <span class="keyword">public</span> Consumer(ServiceA serviceA) {
+        <span class="keyword">this</span>.serviceA = serviceA;
+    }
+
+    <span class="keyword">public void</span> execute() {
+        serviceA.process();
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are the different bean scopes in Spring Boot?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>Singleton (Default):</strong> Single instance shared across application</li>
+                        <li><strong>Prototype:</strong> New instance created every time bean is requested</li>
+                        <li><strong>Request:</strong> New instance per HTTP request (web apps)</li>
+                        <li><strong>Session:</strong> New instance per HTTP session (web apps)</li>
+                        <li><strong>Application:</strong> Single instance per application lifecycle</li>
+                    </ul>
+                    <div class="code-block">
+<span class="annotation">@Component</span>
+<span class="annotation">@Scope</span>(<span class="string">"prototype"</span>)
+<span class="keyword">public class</span> PrototypeService {
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between @Autowired and @Qualifier?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>@Autowired:</strong> Automatically injects dependencies by type.</p>
+                    <p><strong>@Qualifier:</strong> Used when multiple beans of the same type exist to specify which bean to inject.</p>
+                    <div class="code-block">
+<span class="annotation">@Service</span>
+<span class="annotation">@Qualifier</span>(<span class="string">"creditCardService"</span>)
+<span class="keyword">public class</span> CreditCardPaymentService <span class="keyword">implements</span> PaymentService {
+    <span class="keyword">public void</span> pay() {
+        System.out.println(<span class="string">"Paid with credit card"</span>);
+    }
+}
+
+<span class="annotation">@Service</span>
+<span class="keyword">public class</span> PaymentProcessor {
+    <span class="annotation">@Autowired</span>
+    <span class="annotation">@Qualifier</span>(<span class="string">"creditCardService"</span>)
+    <span class="keyword">private</span> PaymentService paymentService;
+}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spring Security Section -->
+        <section class="section" data-category="spring-security">
+            <h2>Spring Security</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>How do you secure a Spring Boot REST API?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Common ways to secure Spring Boot REST APIs:</p>
+                    <ul>
+                        <li><strong>Basic Authentication:</strong> Uses username and password</li>
+                        <li><strong>JWT (JSON Web Token):</strong> Stateless authentication using tokens</li>
+                        <li><strong>OAuth2:</strong> Third-party authorization (Google, Facebook)</li>
+                        <li><strong>Role-Based Access Control (RBAC):</strong> Restrict access based on user roles</li>
+                    </ul>
+                    <div class="code-block">
+<span class="annotation">@Configuration</span>
+<span class="annotation">@EnableWebSecurity</span>
+<span class="keyword">public class</span> SecurityConfig <span class="keyword">extends</span> WebSecurityConfigurerAdapter {
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> configure(HttpSecurity http) <span class="keyword">throws</span> Exception {
+        http.csrf().disable()
+            .authorizeRequests()
+            .antMatchers(<span class="string">"/api/public"</span>).permitAll()
+            .antMatchers(<span class="string">"/api/private"</span>).authenticated()
+            .and()
+            .httpBasic();
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is JWT (JSON Web Token) and how do you implement it?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>JWT is a compact, self-contained way to securely transmit information between client and server. It's commonly used for stateless authentication in REST APIs.</p>
+                    <p><strong>JWT Authentication Flow:</strong></p>
+                    <ol>
+                        <li>Client sends username/password to /api/login</li>
+                        <li>Server validates credentials and generates JWT</li>
+                        <li>Client stores JWT (local storage/memory)</li>
+                        <li>Client sends JWT in Authorization: Bearer &lt;token&gt; header</li>
+                        <li>Filter verifies token before request proceeds</li>
+                        <li>If valid, server retrieves user identity from token claims</li>
+                    </ol>
+                    <div class="code-block">
+<span class="comment">// JWT Utility Class</span>
+<span class="keyword">public class</span> JwtUtil {
+    <span class="keyword">private static final</span> SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+    <span class="keyword">public static</span> String generateToken(String username) {
+        <span class="keyword">return</span> Jwts.builder()
+            .setSubject(username)
+            .setIssuedAt(<span class="keyword">new</span> Date())
+            .setExpiration(<span class="keyword">new</span> Date(System.currentTimeMillis() + 86400000))
+            .signWith(secretKey)
+            .compact();
+    }
+}
+
+<span class="comment">// JWT Filter</span>
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> JwtFilter <span class="keyword">extends</span> OncePerRequestFilter {
+    <span class="annotation">@Override</span>
+    <span class="keyword">protected void</span> doFilterInternal(HttpServletRequest request,
+                                          HttpServletResponse response,
+                                          FilterChain chain) {
+        String token = request.getHeader(<span class="string">"Authorization"</span>);
+        <span class="keyword">if</span> (token != <span class="keyword">null</span> && token.startsWith(<span class="string">"Bearer "</span>)) {
+            Claims claims = JwtUtil.extractClaims(token.substring(7));
+            System.out.println(<span class="string">"Authenticated User: "</span> + claims.getSubject());
+        }
+        chain.doFilter(request, response);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between authentication and authorization?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>Authentication:</strong> Verifies who the user is (e.g., logging in with username/password)</li>
+                        <li><strong>Authorization:</strong> Determines what the user can access (e.g., Admin users can delete records)</li>
+                    </ul>
+                    <div class="code-block">
+http.authorizeRequests()
+    .antMatchers(<span class="string">"/admin/**"</span>).hasRole(<span class="string">"ADMIN"</span>)
+    .antMatchers(<span class="string">"/user/**"</span>).hasAnyRole(<span class="string">"USER"</span>, <span class="string">"ADMIN"</span>)
+    .anyRequest().authenticated();
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>How do you enable CORS in Spring Boot?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <div class="code-block">
+<span class="annotation">@Configuration</span>
+<span class="keyword">public class</span> CorsConfig {
+    <span class="annotation">@Bean</span>
+    <span class="keyword">public</span> WebMvcConfigurer corsConfigurer() {
+        <span class="keyword">return new</span> WebMvcConfigurer() {
+            <span class="annotation">@Override</span>
+            <span class="keyword">public void</span> addCorsMappings(CorsRegistry registry) {
+                registry.addMapping(<span class="string">"/api/**"</span>)
+                    .allowedOrigins(<span class="string">"http://example.com"</span>)
+                    .allowedMethods(<span class="string">"GET"</span>, <span class="string">"POST"</span>, <span class="string">"PUT"</span>, <span class="string">"DELETE"</span>)
+                    .allowedHeaders(<span class="string">"*"</span>);
+            }
+        };
+    }
+}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Microservices Section -->
+        <section class="section" data-category="microservices">
+            <h2>Microservices</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are microservices?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Microservices is an architecture where an application is divided into small, independent services that communicate via APIs. Spring Boot supports microservices through:</p>
+                    <ul>
+                        <li>Spring Cloud for distributed systems</li>
+                        <li>Spring Boot Starter Dependencies for easy setup</li>
+                        <li>Embedded servers for lightweight deployment</li>
+                        <li>Resilience tools like Circuit Breakers (Resilience4j)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Spring Cloud?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Spring Cloud provides tools to handle common microservices challenges:</p>
+                    <ul>
+                        <li><strong>Eureka:</strong> Service discovery</li>
+                        <li><strong>Feign:</strong> Simplifies REST communication between services</li>
+                        <li><strong>Ribbon:</strong> Client-side load balancing</li>
+                        <li><strong>API Gateway:</strong> Manages and secures API traffic</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the role of Eureka Server and Eureka Client?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Eureka Server:</strong> Acts as a service registry where microservices register themselves.</p>
+                    <p><strong>Eureka Client:</strong> Registers the service with Eureka Server and discovers other services dynamically.</p>
+                    <div class="code-block">
+<span class="comment">// Eureka Server</span>
+<span class="annotation">@EnableEurekaServer</span>
+<span class="annotation">@SpringBootApplication</span>
+<span class="keyword">public class</span> EurekaServerApplication {
+    <span class="keyword">public static void</span> main(String[] args) {
+        SpringApplication.run(EurekaServerApplication.<span class="keyword">class</span>, args);
+    }
+}
+
+<span class="comment">// Eureka Client</span>
+<span class="annotation">@EnableEurekaClient</span>
+<span class="annotation">@SpringBootApplication</span>
+<span class="keyword">public class</span> MyServiceApplication {
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is an API Gateway?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>API Gateway is a single entry point that routes requests to different microservices. It provides authentication, logging, rate limiting, and load balancing.</p>
+                    <div class="code-block">
+<span class="annotation">@SpringBootApplication</span>
+<span class="annotation">@EnableDiscoveryClient</span>
+<span class="keyword">public class</span> ApiGatewayApplication {
+    <span class="keyword">public static void</span> main(String[] args) {
+        SpringApplication.run(ApiGatewayApplication.<span class="keyword">class</span>, args);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is a Circuit Breaker?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Circuit Breaker is a design pattern used to detect failures and prevent the system from repeatedly calling a failing service.</p>
+                    <p><strong>States:</strong></p>
+                    <ul>
+                        <li><strong>Closed:</strong> Calls flow normally</li>
+                        <li><strong>Open:</strong> Calls are blocked (fallback is used)</li>
+                        <li><strong>Half-Open:</strong> Limited calls to check if service has recovered</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the Saga Pattern?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Saga Pattern breaks distributed transactions into multiple steps. If one step fails, compensating actions undo previous changes.</p>
+                    <p><strong>Example - Booking a Trip:</strong></p>
+                    <ol>
+                        <li>Flight Service books a ticket ✅</li>
+                        <li>Hotel Service reserves a room ✅</li>
+                        <li>Payment Service charges the user ❌ (Fails)</li>
+                    </ol>
+                    <p>Since payment fails, Saga triggers:</p>
+                    <ul>
+                        <li>Hotel Service → cancel reservation</li>
+                        <li>Flight Service → cancel ticket</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Section -->
+        <section class="section" data-category="database">
+            <h2>Database & SQL</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between Primary Key and Unique Key?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Primary Key</th>
+                            <th>Unique Key</th>
+                        </tr>
+                        <tr>
+                            <td>Purpose</td>
+                            <td>Uniquely identifies each row</td>
+                            <td>Ensures uniqueness of column values</td>
+                        </tr>
+                        <tr>
+                            <td>NULL Allowed?</td>
+                            <td>No</td>
+                            <td>Yes (one null in MySQL)</td>
+                        </tr>
+                        <tr>
+                            <td>Number per Table</td>
+                            <td>Only one</td>
+                            <td>Multiple</td>
+                        </tr>
+                        <tr>
+                            <td>Creates Index?</td>
+                            <td>Clustered index</td>
+                            <td>Non-clustered index</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is a composite key?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A composite key is a combination of two or more columns in a table that together uniquely identify a row. It's used when a single column is not enough to uniquely identify a record.</p>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is a Foreign Key?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Foreign Key is a column (or set of columns) in one table that establishes a link between data in two tables. It refers to the Primary Key or Unique Key in another table, creating a relationship between the tables.</p>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is an Index?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>An index is a data structure that improves the speed of data retrieval from a table. Instead of scanning every row, the database uses the index to go directly to the row, similar to a book index.</p>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is Spring Data JPA?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Spring Data JPA is a part of the Spring Data family that makes it easy to implement JPA-based repositories. It reduces boilerplate code by providing built-in CRUD operations and query methods.</p>
+                    <div class="code-block">
+<span class="annotation">@Repository</span>
+<span class="keyword">public interface</span> UserRepository <span class="keyword">extends</span> JpaRepository&lt;User, Long&gt; {
+    <span class="comment">// Built-in CRUD methods: save, findById, findAll, delete, etc.</span>
+
+    <span class="comment">// Custom query methods</span>
+    List&lt;User&gt; findByName(String name);
+    List&lt;User&gt; findByAgeGreaterThan(<span class="keyword">int</span> age);
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between save() and saveAndFlush()?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>save():</strong> Saves the entity but doesn't immediately flush to the database (waits for transaction commit)</li>
+                        <li><strong>saveAndFlush():</strong> Saves the entity and immediately flushes to the database</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Design Patterns Section -->
+        <section class="section" data-category="design-patterns">
+            <h2>Design Patterns & SOLID Principles</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are the SOLID Principles?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Principle</th>
+                            <th>Java Definition</th>
+                            <th>Spring Boot Example</th>
+                        </tr>
+                        <tr>
+                            <td>SRP</td>
+                            <td>Class should have one reason to change</td>
+                            <td>Separate business logic (Service) from HTTP handling (Controller)</td>
+                        </tr>
+                        <tr>
+                            <td>OCP</td>
+                            <td>Open for extension, closed for modification</td>
+                            <td>Use @Component with interface injection</td>
+                        </tr>
+                        <tr>
+                            <td>LSP</td>
+                            <td>Subtypes must be substitutable for base types</td>
+                            <td>Inject NotificationService interface</td>
+                        </tr>
+                        <tr>
+                            <td>ISP</td>
+                            <td>Don't force implementing unused methods</td>
+                            <td>Split interfaces (UserReadService, UserWriteService)</td>
+                        </tr>
+                        <tr>
+                            <td>DIP</td>
+                            <td>Depend on abstractions, not concretions</td>
+                            <td>Define interfaces and inject via @Autowired</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are common Microservices Design Patterns?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Pattern</th>
+                            <th>Purpose</th>
+                        </tr>
+                        <tr>
+                            <td>API Gateway</td>
+                            <td>Single entry point; handles routing, auth, logging</td>
+                        </tr>
+                        <tr>
+                            <td>Service Discovery</td>
+                            <td>Dynamic lookup of services (Eureka, Consul)</td>
+                        </tr>
+                        <tr>
+                            <td>Database per Service</td>
+                            <td>Each service owns its database</td>
+                        </tr>
+                        <tr>
+                            <td>Circuit Breaker</td>
+                            <td>Prevents cascading failures</td>
+                        </tr>
+                        <tr>
+                            <td>Saga</td>
+                            <td>Manages distributed transactions</td>
+                        </tr>
+                        <tr>
+                            <td>CQRS</td>
+                            <td>Separates read and write models</td>
+                        </tr>
+                        <tr>
+                            <td>Event Sourcing</td>
+                            <td>Stores state changes as events</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Topics Section -->
+        <section class="section" data-category="all">
+            <h2>Additional Important Topics</h2>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are HTTP Status Codes?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Code</th>
+                            <th>Meaning</th>
+                            <th>Use Case</th>
+                        </tr>
+                        <tr>
+                            <td>200</td>
+                            <td>OK</td>
+                            <td>Successful GET or POST</td>
+                        </tr>
+                        <tr>
+                            <td>201</td>
+                            <td>Created</td>
+                            <td>Resource created</td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>Bad Request</td>
+                            <td>Malformed syntax or invalid input</td>
+                        </tr>
+                        <tr>
+                            <td>401</td>
+                            <td>Unauthorized</td>
+                            <td>Missing or invalid authentication</td>
+                        </tr>
+                        <tr>
+                            <td>403</td>
+                            <td>Forbidden</td>
+                            <td>Authenticated but not allowed</td>
+                        </tr>
+                        <tr>
+                            <td>404</td>
+                            <td>Not Found</td>
+                            <td>Resource doesn't exist</td>
+                        </tr>
+                        <tr>
+                            <td>500</td>
+                            <td>Internal Server Error</td>
+                            <td>Generic server-side failure</td>
+                        </tr>
+                        <tr>
+                            <td>503</td>
+                            <td>Service Unavailable</td>
+                            <td>Server is down or overloaded</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What are HTTP Methods?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Method</th>
+                            <th>Purpose</th>
+                            <th>CRUD Mapping</th>
+                        </tr>
+                        <tr>
+                            <td>GET</td>
+                            <td>Retrieve data</td>
+                            <td>Read</td>
+                        </tr>
+                        <tr>
+                            <td>POST</td>
+                            <td>Create new resource</td>
+                            <td>Create</td>
+                        </tr>
+                        <tr>
+                            <td>PUT</td>
+                            <td>Replace entire resource</td>
+                            <td>Update/Replace</td>
+                        </tr>
+                        <tr>
+                            <td>PATCH</td>
+                            <td>Modify part of resource</td>
+                            <td>Partial Update</td>
+                        </tr>
+                        <tr>
+                            <td>DELETE</td>
+                            <td>Remove resource</td>
+                            <td>Delete</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>How do you enable caching in Spring Boot?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <div class="code-block">
+<span class="comment">// 1. Enable caching</span>
+<span class="annotation">@EnableCaching</span>
+<span class="annotation">@SpringBootApplication</span>
+<span class="keyword">public class</span> MyApplication {
+}
+
+<span class="comment">// 2. Use @Cacheable</span>
+<span class="annotation">@Cacheable</span>(<span class="string">"users"</span>)
+<span class="keyword">public</span> User getUserById(Long id) {
+    <span class="keyword">return</span> userRepository.findById(id).orElse(<span class="keyword">null</span>);
+}
+                    </div>
+                    <p>First call fetches from database, subsequent calls fetch from cache.</p>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is @Async annotation?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@Async makes a method run asynchronously in a separate thread. Requires @EnableAsync.</p>
+                    <div class="code-block">
+<span class="annotation">@EnableAsync</span>
+<span class="annotation">@SpringBootApplication</span>
+<span class="keyword">public class</span> MyApplication {
+}
+
+<span class="annotation">@Service</span>
+<span class="keyword">public class</span> AsyncService {
+    <span class="annotation">@Async</span>
+    <span class="keyword">public void</span> process() {
+        System.out.println(<span class="string">"Executing in thread: "</span> + Thread.currentThread().getName());
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is @Scheduled annotation?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@Scheduled is used to run tasks at fixed intervals (cron jobs, background processing). Requires @EnableScheduling.</p>
+                    <div class="code-block">
+<span class="annotation">@EnableScheduling</span>
+<span class="annotation">@SpringBootApplication</span>
+<span class="keyword">public class</span> MyApplication {
+}
+
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> ScheduledTasks {
+    <span class="annotation">@Scheduled</span>(fixedRate = 5000)  <span class="comment">// Runs every 5 seconds</span>
+    <span class="keyword">public void</span> runTask() {
+        System.out.println(<span class="string">"Executing task..."</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>How do you handle exceptions in Spring Boot REST API?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Use @ControllerAdvice for global exception handling.</p>
+                    <div class="code-block">
+<span class="annotation">@ControllerAdvice</span>
+<span class="keyword">public class</span> GlobalExceptionHandler {
+    <span class="annotation">@ExceptionHandler</span>(IllegalArgumentException.<span class="keyword">class</span>)
+    <span class="keyword">public</span> ResponseEntity&lt;String&gt; handleIllegalArgument(IllegalArgumentException ex) {
+        <span class="keyword">return</span> ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    <span class="annotation">@ExceptionHandler</span>(Exception.<span class="keyword">class</span>)
+    <span class="keyword">public</span> ResponseEntity&lt;String&gt; handleGeneralException(Exception ex) {
+        <span class="keyword">return</span> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(<span class="string">"Something went wrong"</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the purpose of Spring Boot Actuator?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Spring Boot Actuator provides production-ready features for monitoring and managing your application:</p>
+                    <ul>
+                        <li>Health checks (/actuator/health)</li>
+                        <li>Metrics (/actuator/metrics)</li>
+                        <li>Application info (/actuator/info)</li>
+                        <li>Environment details (/actuator/env)</li>
+                        <li>Thread dumps (/actuator/threaddump)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between synchronized method and synchronized block?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Synchronized Method:</strong> Locks the entire method, only one thread can execute it at a time.</p>
+                    <p><strong>Synchronized Block:</strong> Locks only a specific portion of code, allowing finer control and better performance.</p>
+                    <div class="code-block">
+<span class="comment">// Synchronized method</span>
+<span class="keyword">public synchronized void</span> method1() {
+    <span class="comment">// Entire method is locked</span>
+}
+
+<span class="comment">// Synchronized block</span>
+<span class="keyword">public void</span> method2() {
+    <span class="comment">// Only this block is locked</span>
+    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) {
+        <span class="comment">// Critical section</span>
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>How do you configure Spring Profiles?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Spring profiles allow environment-specific configurations (dev, test, prod).</p>
+                    <div class="code-block">
+<span class="comment">// application-dev.properties</span>
+spring.datasource.url=jdbc:mysql://localhost:3306/devdb
+
+<span class="comment">// application-prod.properties</span>
+spring.datasource.url=jdbc:mysql://prod-server:3306/proddb
+
+<span class="comment">// Activate profile</span>
+spring.profiles.active=prod
+                    </div>
+                    <p>Activation methods:</p>
+                    <ul>
+                        <li>Command line: --spring.profiles.active=prod</li>
+                        <li>Environment variable: SPRING_PROFILES_ACTIVE=prod</li>
+                        <li>application.properties: spring.profiles.active=dev</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>What is the difference between Maven dependencyManagement and dependencies?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>dependencyManagement:</strong> Defines versions, scopes, and exclusions for dependencies shared across child modules. Doesn't automatically include dependencies.</p>
+                    <p><strong>dependencies:</strong> Actually includes the dependencies in the project.</p>
+                    <div class="code-block">
+<span class="comment">// Parent pom.xml - dependencyManagement</span>
+&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+            &lt;version&gt;3.2.0&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;
+
+<span class="comment">// Child pom.xml - dependencies (no version needed)</span>
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Spring Boot Quick Revision Section -->
+        <section class="section" data-category="spring-boot">
+            <h2>Spring Boot Quick Revision (Questions 1-25)</h2>
+            
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣ What is Spring Boot, and how is it different from Spring Framework?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Spring Boot simplifies Spring development using auto-configuration, starters, and embedded servers. It eliminates boilerplate code and configuration required in traditional Spring Framework.</p>
+                    <p><strong>Key Differences:</strong></p>
+                    <ul>
+                        <li>Auto-configuration vs manual XML/Java configuration</li>
+                        <li>Embedded server (Tomcat) vs external server deployment</li>
+                        <li>Starter dependencies for simplified setup</li>
+                        <li>Production-ready features out of the box</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣ What are the advantages of Spring Boot?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>Auto-configuration:</strong> Automatically configures application components based on dependencies</li>
+                        <li><strong>Embedded Server:</strong> Comes with Tomcat, Jetty, or Undertow - no external server needed</li>
+                        <li><strong>Starter Dependencies:</strong> Simplified dependency management with curated dependency sets</li>
+                        <li><strong>Less Boilerplate:</strong> Reduces XML and complex Java configurations</li>
+                        <li><strong>Production-Ready:</strong> Includes Actuator for monitoring, health checks, and metrics</li>
+                        <li><strong>Microservices Support:</strong> Designed for building microservices architecture</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>3️⃣ What is @SpringBootApplication?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@SpringBootApplication is a meta-annotation that combines three annotations:</p>
+                    <ul>
+                        <li><strong>@Configuration:</strong> Defines beans in the Spring context</li>
+                        <li><strong>@EnableAutoConfiguration:</strong> Automatically configures Spring components based on classpath dependencies</li>
+                        <li><strong>@ComponentScan:</strong> Scans for Spring components (@Component, @Service, @Repository, @Controller) in the package and sub-packages</li>
+                    </ul>
+                    <div class="code-block">
+<span class="annotation">@SpringBootApplication</span>
+<span class="keyword">public class</span> MyApplication {
+    <span class="keyword">public static void</span> main(String[] args) {
+        SpringApplication.run(MyApplication.<span class="keyword">class</span>, args);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>4️⃣ What is the role of spring-boot-starter dependencies?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Spring Boot Starters are pre-defined dependency templates that group commonly used libraries to reduce configuration effort. They provide a group of commonly required dependencies for a particular functionality.</p>
+                    <p><strong>Common Starters:</strong></p>
+                    <ul>
+                        <li>spring-boot-starter-web: Spring MVC + Embedded Tomcat</li>
+                        <li>spring-boot-starter-data-jpa: Hibernate + Spring Data JPA</li>
+                        <li>spring-boot-starter-security: Spring Security for authentication</li>
+                        <li>spring-boot-starter-test: JUnit, Mockito for testing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>5️⃣ What is the default embedded server in Spring Boot? Can you change it?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Default Server:</strong> Apache Tomcat is the default embedded server for Spring Boot web applications.</p>
+                    <p><strong>Can it be changed?</strong> Yes! You can replace Tomcat with Jetty or Undertow by excluding spring-boot-starter-tomcat and adding the new server dependency.</p>
+                    <div class="code-block">
+<span class="comment">// Exclude Tomcat and add Jetty</span>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-jetty&lt;/artifactId&gt;
+&lt;/dependency&gt;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣1️⃣ What is Dependency Injection?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Dependency Injection (DI) is a design pattern where Spring provides required dependencies instead of the developer creating objects manually using the <code>new</code> keyword. It helps maintain loose coupling between classes.</p>
+                    <p>Spring's IoC (Inversion of Control) container manages the creation and lifecycle of objects (beans).</p>
+                    <div class="code-block">
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> ServiceA {
+    <span class="keyword">public void</span> process() {
+        System.out.println(<span class="string">"Processing..."</span>);
+    }
+}
+
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> Consumer {
+    <span class="keyword">private final</span> ServiceA serviceA;
+
+    <span class="annotation">@Autowired</span>
+    <span class="keyword">public</span> Consumer(ServiceA serviceA) {
+        <span class="keyword">this</span>.serviceA = serviceA;  <span class="comment">// Spring injects ServiceA</span>
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣2️⃣ What are the different bean scopes?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>Singleton (Default):</strong> Single instance created and shared across the application</li>
+                        <li><strong>Prototype:</strong> New instance created every time the bean is requested</li>
+                        <li><strong>Request:</strong> New instance per HTTP request (web applications only)</li>
+                        <li><strong>Session:</strong> New instance per HTTP session (web applications only)</li>
+                        <li><strong>Application:</strong> Single instance per ServletContext lifecycle</li>
+                        <li><strong>WebSocket:</strong> New instance per WebSocket connection</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣3️⃣ Difference between @Autowired and @Qualifier?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>@Autowired:</strong> Automatically injects dependencies by type. Used when there's only one bean of the required type.</p>
+                    <p><strong>@Qualifier:</strong> Used when multiple beans of the same type exist. It helps select a specific bean by name to inject.</p>
+                    <div class="code-block">
+<span class="annotation">@Service</span>
+<span class="annotation">@Qualifier</span>(<span class="string">"creditCardService"</span>)
+<span class="keyword">public class</span> CreditCardPaymentService <span class="keyword">implements</span> PaymentService {
+}
+
+<span class="annotation">@Service</span>
+<span class="keyword">public class</span> PaymentProcessor {
+    <span class="annotation">@Autowired</span>
+    <span class="annotation">@Qualifier</span>(<span class="string">"creditCardService"</span>)
+    <span class="keyword">private</span> PaymentService paymentService;
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣4️⃣ How do you define a Prototype bean?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Use @Scope("prototype") with @Component or @Bean annotation to define a prototype bean.</p>
+                    <div class="code-block">
+<span class="comment">// Using @Component</span>
+<span class="annotation">@Component</span>
+<span class="annotation">@Scope</span>(<span class="string">"prototype"</span>)
+<span class="keyword">public class</span> PrototypeService {
+}
+
+<span class="comment">// Using @Bean</span>
+<span class="annotation">@Configuration</span>
+<span class="keyword">public class</span> AppConfig {
+    <span class="annotation">@Bean</span>
+    <span class="annotation">@Scope</span>(<span class="string">"prototype"</span>)
+    <span class="keyword">public</span> PrototypeService prototypeService() {
+        <span class="keyword">return new</span> PrototypeService();
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣5️⃣ Difference between field, constructor, and setter injection?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>Field Injection:</strong> Uses @Autowired directly on fields. Not recommended - makes testing harder and doesn't support immutability.</li>
+                        <li><strong>Constructor Injection (Recommended):</strong> Injects via constructor. Best for mandatory dependencies, supports immutability, simplifies testing.</li>
+                        <li><strong>Setter Injection:</strong> Injects via setter methods. Useful for optional dependencies that may change during runtime.</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// Constructor Injection (Recommended)</span>
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> Consumer {
+    <span class="keyword">private final</span> ServiceA serviceA;
+
+    <span class="annotation">@Autowired</span>
+    <span class="keyword">public</span> Consumer(ServiceA serviceA) {
+        <span class="keyword">this</span>.serviceA = serviceA;
+    }
+}
+
+<span class="comment">// Setter Injection</span>
+<span class="annotation">@Component</span>
+<span class="keyword">public class</span> Consumer {
+    <span class="keyword">private</span> ServiceA serviceA;
+
+    <span class="annotation">@Autowired</span>
+    <span class="keyword">public void</span> setServiceA(ServiceA serviceA) {
+        <span class="keyword">this</span>.serviceA = serviceA;
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>6️⃣ What is the difference between @Component, @Service, and @Repository?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>All three annotations create Spring-managed beans, but they serve different purposes:</p>
+                    <ul>
+                        <li><strong>@Component:</strong> Generic annotation for any Spring-managed component</li>
+                        <li><strong>@Service:</strong> Specialization of @Component for business logic layer. Indicates service-layer classes.</li>
+                        <li><strong>@Repository:</strong> Specialization of @Component for data access layer. Provides exception translation for database errors.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>7️⃣ What is @RestController vs @Controller?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>@Controller:</strong> Used for traditional MVC applications. Returns views (HTML/JSP/Thymeleaf). Requires @ResponseBody to return data.</li>
+                        <li><strong>@RestController:</strong> Used for REST APIs. Returns response data directly (JSON/XML). It's a combination of @Controller + @ResponseBody.</li>
+                    </ul>
+                    <div class="code-block">
+<span class="annotation">@RestController</span>
+<span class="annotation">@RequestMapping</span>(<span class="string">"/api"</span>)
+<span class="keyword">public class</span> ApiController {
+    <span class="annotation">@GetMapping</span>(<span class="string">"/users"</span>)
+    <span class="keyword">public</span> List&lt;String&gt; getUsers() {
+        <span class="keyword">return</span> List.of(<span class="string">"Umesh"</span>, <span class="string">"Rahul"</span>);  <span class="comment">// Returns JSON automatically</span>
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>8️⃣ What is the purpose of @Bean?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@Bean is used to explicitly define a Spring-managed bean, usually inside a @Configuration class. Unlike @Component, it's used for third-party classes or when custom initialization is needed.</p>
+                    <div class="code-block">
+<span class="annotation">@Configuration</span>
+<span class="keyword">public class</span> AppConfig {
+    <span class="annotation">@Bean</span>
+    <span class="keyword">public</span> DataSource dataSource() {
+        <span class="keyword">return new</span> HikariDataSource();
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>9️⃣ @ConfigurationProperties vs @Value?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>@Value:</strong> Used for individual property values. Good for single properties.</li>
+                        <li><strong>@ConfigurationProperties:</strong> Binds a group of related properties to a POJO. Better for structured configuration with multiple related values.</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// Using @Value</span>
+<span class="annotation">@Value</span>(<span class="string">"${app.name}"</span>)
+<span class="keyword">private</span> String appName;
+
+<span class="comment">// Using @ConfigurationProperties</span>
+<span class="annotation">@Component</span>
+<span class="annotation">@ConfigurationProperties</span>(prefix = <span class="string">"app"</span>)
+<span class="keyword">public class</span> AppProperties {
+    <span class="keyword">private</span> String name;
+    <span class="keyword">private</span> String version;
+    <span class="comment">// Getters and Setters</span>
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>🔟 How does @Transactional work?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@Transactional manages database transactions. It ensures atomicity - if a transaction fails according to rollback rules, all changes can be rolled back automatically.</p>
+                    <div class="code-block">
+<span class="annotation">@Service</span>
+<span class="keyword">public class</span> UserService {
+    <span class="annotation">@Autowired</span>
+    <span class="keyword">private</span> UserRepository userRepository;
+
+    <span class="annotation">@Transactional</span>
+    <span class="keyword">public void</span> createUser(User user) {
+        userRepository.save(user);
+        
+        <span class="keyword">if</span> (user.getName().isEmpty()) {
+            <span class="keyword">throw new</span> RuntimeException(<span class="string">"Name cannot be empty"</span>);
+        }
+        <span class="comment">// If exception thrown, transaction rolls back</span>
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣6️⃣ How do you create a RESTful API using Spring Boot?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Use @RestController with HTTP method mappings:</p>
+                    <ul>
+                        <li>@GetMapping - for GET requests</li>
+                        <li>@PostMapping - for POST requests</li>
+                        <li>@PutMapping - for PUT requests</li>
+                        <li>@DeleteMapping - for DELETE requests</li>
+                        <li>@PatchMapping - for PATCH requests</li>
+                    </ul>
+                    <div class="code-block">
+<span class="annotation">@RestController</span>
+<span class="annotation">@RequestMapping</span>(<span class="string">"/api/users"</span>)
+<span class="keyword">public class</span> UserController {
+    <span class="annotation">@GetMapping</span>(<span class="string">"/{id}"</span>)
+    <span class="keyword">public</span> ResponseEntity&lt;User&gt; getUser(<span class="annotation">@PathVariable</span> Long id) {
+        <span class="keyword">return</span> ResponseEntity.ok(userService.findById(id));
+    }
+
+    <span class="annotation">@PostMapping</span>
+    <span class="keyword">public</span> ResponseEntity&lt;User&gt; createUser(<span class="annotation">@RequestBody</span> User user) {
+        <span class="keyword">return</span> ResponseEntity.ok(userService.save(user));
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣7️⃣ How do you handle exceptions in a REST API?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Use @ExceptionHandler for local exception handling and @ControllerAdvice for centralized/global exception handling across all controllers.</p>
+                    <div class="code-block">
+<span class="annotation">@ControllerAdvice</span>
+<span class="keyword">public class</span> GlobalExceptionHandler {
+    <span class="annotation">@ExceptionHandler</span>(IllegalArgumentException.<span class="keyword">class</span>)
+    <span class="keyword">public</span> ResponseEntity&lt;String&gt; handleIllegalArgument(IllegalArgumentException ex) {
+        <span class="keyword">return</span> ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    <span class="annotation">@ExceptionHandler</span>(Exception.<span class="keyword">class</span>)
+    <span class="keyword">public</span> ResponseEntity&lt;String&gt; handleGeneralException(Exception ex) {
+        <span class="keyword">return</span> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(<span class="string">"Something went wrong"</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣8️⃣ What are @RequestBody and @ResponseBody?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>@RequestBody:</strong> Maps HTTP request body (JSON/XML) to a Java object. Used in controller methods to receive data.</li>
+                        <li><strong>@ResponseBody:</strong> Sends the method's return value as the HTTP response body (JSON/XML). @RestController includes this automatically.</li>
+                    </ul>
+                    <div class="code-block">
+<span class="annotation">@PostMapping</span>
+<span class="keyword">public</span> ResponseEntity&lt;User&gt; createUser(<span class="annotation">@RequestBody</span> User user) {
+    <span class="comment">// JSON from request body is mapped to User object</span>
+    <span class="keyword">return</span> ResponseEntity.ok(userService.save(user));
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣9️⃣ How do you validate incoming request data?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Use Bean Validation annotations (@NotNull, @Size, @Email, @Min, @Max, etc.) along with @Valid or @Validated in controller methods.</p>
+                    <div class="code-block">
+<span class="keyword">public class</span> User {
+    <span class="annotation">@NotNull</span>
+    <span class="keyword">private</span> Long id;
+    
+    <span class="annotation">@Size</span>(min = 3, message = <span class="string">"Name must have at least 3 characters"</span>)
+    <span class="keyword">private</span> String name;
+    
+    <span class="annotation">@Email</span>(message = <span class="string">"Invalid email format"</span>)
+    <span class="keyword">private</span> String email;
+}
+
+<span class="annotation">@PostMapping</span>
+<span class="keyword">public</span> ResponseEntity&lt;String&gt; createUser(<span class="annotation">@Valid</span> <span class="annotation">@RequestBody</span> User user) {
+    <span class="keyword">return</span> ResponseEntity.ok(<span class="string">"User created"</span>);
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣0️⃣ What is @ControllerAdvice?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>@ControllerAdvice provides centralized handling for exceptions and other controller-related concerns across multiple controllers. It allows you to define global exception handlers, data binders, and model attributes in one place.</p>
+                    <div class="code-block">
+<span class="annotation">@ControllerAdvice</span>
+<span class="keyword">public class</span> GlobalExceptionHandler {
+    <span class="annotation">@ExceptionHandler</span>(ResourceNotFoundException.<span class="keyword">class</span>)
+    <span class="keyword">public</span> ResponseEntity&lt;String&gt; handleNotFound(ResourceNotFoundException ex) {
+        <span class="keyword">return</span> ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣1️⃣ How do you secure a Spring Boot REST API?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Use Spring Security with multiple approaches:</p>
+                    <ul>
+                        <li><strong>Basic Authentication:</strong> Username/password based authentication</li>
+                        <li><strong>JWT (JSON Web Token):</strong> Stateless token-based authentication</li>
+                        <li><strong>OAuth2:</strong> Third-party authorization (Google, Facebook, etc.)</li>
+                        <li><strong>Role-Based Access Control (RBAC):</strong> Restrict access based on user roles</li>
+                        <li><strong>CORS Configuration:</strong> Allow or restrict cross-origin requests</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣2️⃣ What is JWT and how is it implemented?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>JWT (JSON Web Token) is a token-based authentication mechanism. After authentication, the server generates a signed JWT token. The client sends this token (usually as a Bearer token in the Authorization header) with subsequent requests to prove identity.</p>
+                    <p><strong>JWT Flow:</strong></p>
+                    <ol>
+                        <li>Client sends credentials to /login endpoint</li>
+                        <li>Server validates and generates JWT token</li>
+                        <li>Client stores token (localStorage/memory)</li>
+                        <li>Client sends token in Authorization: Bearer &lt;token&gt; header</li>
+                        <li>Server validates token and grants access</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣3️⃣ What is OAuth2?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>OAuth2 is an authorization framework that allows applications to access protected resources using access tokens. It enables third-party services (like Google, Facebook) to grant access without sharing user credentials directly.</p>
+                    <p><strong>OAuth2 Flow:</strong></p>
+                    <ol>
+                        <li>User clicks "Login with Google"</li>
+                        <li>App redirects to Google authentication page</li>
+                        <li>After authentication, Google redirects back with authorization code</li>
+                        <li>App exchanges code for access token</li>
+                        <li>Token is used to access protected resources</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣4️⃣ Authentication vs Authorization?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>Authentication:</strong> Verifies who the user is (identity). Example: Logging in with username and password.</li>
+                        <li><strong>Authorization:</strong> Determines what the user can access (permissions). Example: Admin users can delete records, but normal users cannot.</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// Authentication: Who are you?</span>
+<span class="comment">// Authorization: What are you allowed to do?</span>
+
+http.authorizeRequests()
+    .antMatchers(<span class="string">"/admin/**"</span>).hasRole(<span class="string">"ADMIN"</span>)
+    .antMatchers(<span class="string">"/user/**"</span>).hasAnyRole(<span class="string">"USER"</span>, <span class="string">"ADMIN"</span>)
+    .anyRequest().authenticated();
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣5️⃣ How do you enable CORS in Spring Boot?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>CORS (Cross-Origin Resource Sharing) can be configured in three ways:</p>
+                    <ul>
+                        <li><strong>Globally:</strong> Using WebMvcConfigurer configuration class</li>
+                        <li><strong>Controller Level:</strong> Using @CrossOrigin annotation on controller or methods</li>
+                        <li><strong>Spring Security:</strong> Configured in SecurityFilterChain</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// Global CORS Configuration</span>
+<span class="annotation">@Configuration</span>
+<span class="keyword">public class</span> CorsConfig {
+    <span class="annotation">@Bean</span>
+    <span class="keyword">public</span> WebMvcConfigurer corsConfigurer() {
+        <span class="keyword">return new</span> WebMvcConfigurer() {
+            <span class="annotation">@Override</span>
+            <span class="keyword">public void</span> addCorsMappings(CorsRegistry registry) {
+                registry.addMapping(<span class="string">"/api/**"</span>)
+                    .allowedOrigins(<span class="string">"http://example.com"</span>)
+                    .allowedMethods(<span class="string">"GET"</span>, <span class="string">"POST"</span>, <span class="string">"PUT"</span>, <span class="string">"DELETE"</span>);
+            }
+        };
+    }
+}
+
+<span class="comment">// Controller Level</span>
+<span class="annotation">@CrossOrigin</span>(origins = <span class="string">"http://example.com"</span>)
+<span class="annotation">@RestController</span>
+<span class="keyword">public class</span> ApiController {
+}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SQL Section -->
+        <section class="section" data-category="sql">
+            <h2>SQL Interview Questions (30 Questions)</h2>
+            
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣ What is the difference between DELETE and TRUNCATE?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>DELETE</th>
+                            <th>TRUNCATE</th>
+                        </tr>
+                        <tr>
+                            <td>Operation</td>
+                            <td>DML command</td>
+                            <td>DDL command</td>
+                        </tr>
+                        <tr>
+                            <td>Where Clause</td>
+                            <td>Can use WHERE clause</td>
+                            <td>Cannot use WHERE clause</td>
+                        </tr>
+                        <tr>
+                            <td>Speed</td>
+                            <td>Slower (logs each row)</td>
+                            <td>Faster (deallocates pages)</td>
+                        </tr>
+                        <tr>
+                            <td>Rollback</td>
+                            <td>Can be rolled back</td>
+                            <td>Cannot be rolled back</td>
+                        </tr>
+                        <tr>
+                            <td>Identity Reset</td>
+                            <td>Does not reset identity</td>
+                            <td>Resets identity</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// DELETE - removes specific rows</span>
+DELETE FROM employees WHERE department_id = 5;
+
+<span class="comment">// TRUNCATE - removes all rows</span>
+TRUNCATE TABLE employees;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣ What are the different types of JOINs in SQL?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>INNER JOIN:</strong> Returns records that have matching values in both tables</li>
+                        <li><strong>LEFT JOIN (LEFT OUTER JOIN):</strong> Returns all records from left table, and matching records from right table</li>
+                        <li><strong>RIGHT JOIN (RIGHT OUTER JOIN):</strong> Returns all records from right table, and matching records from left table</li>
+                        <li><strong>FULL JOIN (FULL OUTER JOIN):</strong> Returns all records when there is a match in either table</li>
+                        <li><strong>CROSS JOIN:</strong> Returns the Cartesian product of the two tables</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// INNER JOIN</span>
+SELECT e.name, d.department_name
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id;
+
+<span class="comment">// LEFT JOIN</span>
+SELECT e.name, d.department_name
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id;
+
+<span class="comment">// RIGHT JOIN</span>
+SELECT e.name, d.department_name
+FROM employees e
+RIGHT JOIN departments d ON e.department_id = d.id;
+
+<span class="comment">// FULL JOIN</span>
+SELECT e.name, d.department_name
+FROM employees e
+FULL OUTER JOIN departments d ON e.department_id = d.id;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>3️⃣ What is the difference between WHERE and HAVING clauses?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>WHERE</th>
+                            <th>HAVING</th>
+                        </tr>
+                        <tr>
+                            <td>Usage</td>
+                            <td>Filters rows before aggregation</td>
+                            <td>Filters groups after aggregation</td>
+                        </tr>
+                        <tr>
+                            <td>Aggregate Functions</td>
+                            <td>Cannot use aggregate functions</td>
+                            <td>Can use aggregate functions</td>
+                        </tr>
+                        <tr>
+                            <td>Execution Order</td>
+                            <td>Executed before GROUP BY</td>
+                            <td>Executed after GROUP BY</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// WHERE - filters before grouping</span>
+SELECT department_id, COUNT(*) as employee_count
+FROM employees
+WHERE salary > 50000
+GROUP BY department_id;
+
+<span class="comment">// HAVING - filters after grouping</span>
+SELECT department_id, COUNT(*) as employee_count
+FROM employees
+GROUP BY department_id
+HAVING COUNT(*) > 5;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>4️⃣ What is a Primary Key?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Primary Key is a column or set of columns that uniquely identifies each row in a table. It cannot contain NULL values and each table can have only one primary key.</p>
+                    <div class="code-block">
+<span class="comment">// Creating table with Primary Key</span>
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100)
+);
+
+<span class="comment">// Adding Primary Key to existing table</span>
+ALTER TABLE employees
+ADD PRIMARY KEY (id);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>5️⃣ What is a Foreign Key?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Foreign Key is a column or set of columns that establishes a relationship between two tables. It references the Primary Key of another table and enforces referential integrity.</p>
+                    <div class="code-block">
+<span class="comment">// Creating table with Foreign Key</span>
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(id)
+);
+
+<span class="comment">// Adding Foreign Key to existing table</span>
+ALTER TABLE orders
+ADD CONSTRAINT fk_customer
+FOREIGN KEY (customer_id) REFERENCES customers(id);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>6️⃣ What is the difference between CHAR and VARCHAR?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>CHAR</th>
+                            <th>VARCHAR</th>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>Fixed length</td>
+                            <td>Variable length</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Faster for fixed-length data</td>
+                            <td>Slower due to length calculation</td>
+                        </tr>
+                        <tr>
+                            <td>Space Usage</td>
+                            <td>Uses full specified length</td>
+                            <td>Uses actual length + 1-2 bytes</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>Fixed-length data like codes</td>
+                            <td>Variable-length data like names</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// CHAR - always uses 10 characters</span>
+name CHAR(10);
+
+<span class="comment">// VARCHAR - uses actual length</span>
+name VARCHAR(10);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>7️⃣ What is an Index in SQL?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>An Index is a database structure that improves the speed of data retrieval operations on a table at the cost of additional writes and storage space. It's similar to a book index that helps you find content quickly.</p>
+                    <div class="code-block">
+<span class="comment">// Creating an Index</span>
+CREATE INDEX idx_employee_name ON employees(name);
+
+<span class="comment">// Creating a Unique Index</span>
+CREATE UNIQUE INDEX idx_employee_email ON employees(email);
+
+<span class="comment">// Creating a Composite Index</span>
+CREATE INDEX idx_employee_dept_salary ON employees(department_id, salary);
+
+<span class="comment">// Dropping an Index</span>
+DROP INDEX idx_employee_name ON employees;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>8️⃣ What is the difference between UNION and UNION ALL?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>UNION</th>
+                            <th>UNION ALL</th>
+                        </tr>
+                        <tr>
+                            <td>Duplicates</td>
+                            <td>Removes duplicate rows</td>
+                            <td>Keeps duplicate rows</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Slower (needs to check duplicates)</td>
+                            <td>Faster (no duplicate check)</td>
+                        </tr>
+                        <tr>
+                            <td>Sorting</td>
+                            <td>Sorts the result</td>
+                            <td>Does not sort</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// UNION - removes duplicates</span>
+SELECT name FROM employees_2022
+UNION
+SELECT name FROM employees_2023;
+
+<span class="comment">// UNION ALL - keeps duplicates</span>
+SELECT name FROM employees_2022
+UNION ALL
+SELECT name FROM employees_2023;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>9️⃣ What is a Subquery?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Subquery is a query nested inside another query. It can be used in SELECT, FROM, WHERE, and HAVING clauses.</p>
+                    <div class="code-block">
+<span class="comment">// Subquery in WHERE clause</span>
+SELECT name, salary
+FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+
+<span class="comment">// Subquery in FROM clause</span>
+SELECT dept_name, avg_salary
+FROM (SELECT department_id, AVG(salary) as avg_salary
+      FROM employees
+      GROUP BY department_id) as dept_avg
+WHERE avg_salary > 60000;
+
+<span class="comment">// Subquery in SELECT clause</span>
+SELECT name, 
+       salary,
+       (SELECT AVG(salary) FROM employees) as avg_salary
+FROM employees;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>🔟 What is the difference between ROWNUM and ROW_NUMBER()?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>ROWNUM (Oracle):</strong> Pseudo-column that assigns a number to each row as it is retrieved. It's assigned before ORDER BY.</li>
+                        <li><strong>ROW_NUMBER():</strong> Window function that assigns a unique sequential number to each row based on the ORDER BY clause.</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// ROW_NUMBER() - works after ORDER BY</span>
+SELECT name, salary,
+       ROW_NUMBER() OVER (ORDER BY salary DESC) as rank
+FROM employees;
+
+<span class="comment">// ROWNUM - assigned before ORDER BY (Oracle)</span>
+SELECT name, salary, ROWNUM
+FROM employees
+ORDER BY salary DESC;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣1️⃣ What is a View in SQL?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A View is a virtual table based on the result-set of an SQL statement. It contains rows and columns, just like a real table, but doesn't store data physically.</p>
+                    <div class="code-block">
+<span class="comment">// Creating a View</span>
+CREATE VIEW employee_department_view AS
+SELECT e.name, e.salary, d.department_name
+FROM employees e
+JOIN departments d ON e.department_id = d.id;
+
+<span class="comment">// Querying a View</span>
+SELECT * FROM employee_department_view;
+
+<span class="comment">// Dropping a View</span>
+DROP VIEW employee_department_view;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣2️⃣ What is a Stored Procedure?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Stored Procedure is a prepared SQL code that you can save and reuse. It can accept input parameters and return output parameters.</p>
+                    <div class="code-block">
+<span class="comment">// Creating a Stored Procedure</span>
+CREATE PROCEDURE GetEmployeesByDepartment(IN dept_id INT)
+BEGIN
+    SELECT * FROM employees WHERE department_id = dept_id;
+END;
+
+<span class="comment">// Calling a Stored Procedure</span>
+CALL GetEmployeesByDepartment(5);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣3️⃣ What is a Trigger?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Trigger is a stored procedure that automatically executes when an event occurs (INSERT, UPDATE, DELETE) on a table.</p>
+                    <div class="code-block">
+<span class="comment">// Creating a Trigger</span>
+CREATE TRIGGER before_employee_insert
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+    SET NEW.created_at = NOW();
+END;
+
+<span class="comment">// Dropping a Trigger</span>
+DROP TRIGGER before_employee_insert;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣4️⃣ What is the difference between DROP, TRUNCATE, and DELETE?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>DELETE</th>
+                            <th>TRUNCATE</th>
+                            <th>DROP</th>
+                        </tr>
+                        <tr>
+                            <td>Operation</td>
+                            <td>DML - removes rows</td>
+                            <td>DDL - removes all rows</td>
+                            <td>DDL - removes table structure</td>
+                        </tr>
+                        <tr>
+                            <td>Rollback</td>
+                            <td>Can be rolled back</td>
+                            <td>Cannot be rolled back</td>
+                            <td>Cannot be rolled back</td>
+                        </tr>
+                        <tr>
+                            <td>Space</td>
+                            <td>Keeps space</td>
+                            <td>Releases space</td>
+                            <td>Releases space</td>
+                        </tr>
+                        <tr>
+                            <td>Identity</td>
+                            <td>Does not reset</td>
+                            <td>Resets identity</td>
+                            <td>N/A</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣5️⃣ What is Normalization?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity. It involves dividing tables into smaller, related tables and defining relationships between them.</p>
+                    <p><strong>Normal Forms:</strong></p>
+                    <ul>
+                        <li><strong>1NF:</strong> Eliminate repeating groups, atomic values</li>
+                        <li><strong>2NF:</strong> Remove partial dependencies (1NF + no partial dependency)</li>
+                        <li><strong>3NF:</strong> Remove transitive dependencies (2NF + no transitive dependency)</li>
+                        <li><strong>BCNF:</strong> Boyce-Codd Normal Form (stricter version of 3NF)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣6️⃣ What is ACID property in database transactions?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>ACID stands for Atomicity, Consistency, Isolation, Durability - properties that guarantee reliable database transactions:</p>
+                    <ul>
+                        <li><strong>Atomicity:</strong> All operations in a transaction succeed or all fail</li>
+                        <li><strong>Consistency:</strong> Database remains in a consistent state before and after transaction</li>
+                        <li><strong>Isolation:</strong> Transactions don't interfere with each other</li>
+                        <li><strong>Durability:</strong> Committed transactions remain permanent even after system failure</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// Transaction Example</span>
+BEGIN TRANSACTION;
+
+UPDATE accounts SET balance = balance - 1000 WHERE id = 1;
+UPDATE accounts SET balance = balance + 1000 WHERE id = 2;
+
+COMMIT;  <span class="comment">// or ROLLBACK;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣7️⃣ What is a Cursor?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Cursor is a database object used to retrieve, manipulate, and navigate through a result set row by row. It's mainly used in stored procedures.</p>
+                    <div class="code-block">
+<span class="comment">// Cursor Example</span>
+DECLARE cursor_name CURSOR FOR
+SELECT name, salary FROM employees;
+
+OPEN cursor_name;
+
+FETCH NEXT FROM cursor_name;
+<span class="comment">// Process each row</span>
+
+CLOSE cursor_name;
+DEALLOCATE cursor_name;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣8️⃣ What is the difference between clustered and non-clustered index?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Clustered Index</th>
+                            <th>Non-Clustered Index</th>
+                        </tr>
+                        <tr>
+                            <td>Data Storage</td>
+                            <td>Data is physically sorted</td>
+                            <td>Data is not physically sorted</td>
+                        </tr>
+                        <tr>
+                            <td>Number per Table</td>
+                            <td>Only one per table</td>
+                            <td>Multiple per table</td>
+                        </tr>
+                        <tr>
+                            <td>Speed</td>
+                            <td>Faster for range queries</td>
+                            <td>Slower for range queries</td>
+                        </tr>
+                        <tr>
+                            <td>Leaf Nodes</td>
+                            <td>Contain actual data</td>
+                            <td>Contain pointers to data</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣9️⃣ What is the COALESCE function?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>COALESCE returns the first non-NULL value in a list. It's useful for providing default values when columns might be NULL.</p>
+                    <div class="code-block">
+<span class="comment">// COALESCE Example</span>
+SELECT name, 
+       COALESCE(phone, 'N/A') as phone,
+       COALESCE(email, secondary_email, 'No Email') as contact_email
+FROM employees;
+
+<span class="comment">// Returns first non-null value</span>
+SELECT COALESCE(NULL, NULL, 'Hello', NULL);  <span class="comment">// Returns 'Hello'</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣0️⃣ What is the difference between COUNT(*) and COUNT(column_name)?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>COUNT(*):</strong> Counts all rows in a table, including NULL values</li>
+                        <li><strong>COUNT(column_name):</strong> Counts only non-NULL values in the specified column</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// COUNT(*) - counts all rows</span>
+SELECT COUNT(*) FROM employees;
+
+<span class="comment">// COUNT(column_name) - counts non-NULL values</span>
+SELECT COUNT(email) FROM employees;
+
+<span class="comment">// COUNT(DISTINCT column) - counts unique non-NULL values</span>
+SELECT COUNT(DISTINCT department_id) FROM employees;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣1️⃣ What is the difference between GROUP BY and ORDER BY?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>GROUP BY</th>
+                            <th>ORDER BY</th>
+                        </tr>
+                        <tr>
+                            <td>Purpose</td>
+                            <td>Groups rows with same values</td>
+                            <td>Sorts the result set</td>
+                        </tr>
+                        <tr>
+                            <td>Aggregate Functions</td>
+                            <td>Used with aggregate functions</td>
+                            <td>Not related to aggregation</td>
+                        </tr>
+                        <tr>
+                            <td>Multiple Columns</td>
+                            <td>Can group by multiple columns</td>
+                            <td>Can sort by multiple columns</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// GROUP BY - groups and aggregates</span>
+SELECT department_id, COUNT(*), AVG(salary)
+FROM employees
+GROUP BY department_id;
+
+<span class="comment">// ORDER BY - sorts results</span>
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣2️⃣ What is a CTE (Common Table Expression)?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A CTE is a temporary result set that can be referenced within a SELECT, INSERT, UPDATE, or DELETE statement. It improves code readability and allows recursive queries.</p>
+                    <div class="code-block">
+<span class="comment">// CTE Example</span>
+WITH DepartmentSalary AS (
+    SELECT department_id, AVG(salary) as avg_salary
+    FROM employees
+    GROUP BY department_id
+)
+SELECT e.name, e.salary, d.avg_salary
+FROM employees e
+JOIN DepartmentSalary d ON e.department_id = d.department_id
+WHERE e.salary > d.avg_salary;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣3️⃣ What is the difference between IN and EXISTS?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>IN</th>
+                            <th>EXISTS</th>
+                        </tr>
+                        <tr>
+                            <td>Usage</td>
+                            <td>Checks if value exists in a list</td>
+                            <td>Checks if subquery returns any rows</td>
+                        </tr>
+                        <tr>
+                            <td>Performance</td>
+                            <td>Slower for large lists</td>
+                            <td>Faster (stops after first match)</td>
+                        </tr>
+                        <tr>
+                            <td>NULL Handling</td>
+                            <td>Handles NULL differently</td>
+                            <td>Returns FALSE on NULL</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// IN - checks value in list</span>
+SELECT * FROM employees
+WHERE department_id IN (1, 2, 3);
+
+<span class="comment">// EXISTS - checks if subquery returns rows</span>
+SELECT * FROM employees e
+WHERE EXISTS (
+    SELECT 1 FROM departments d 
+    WHERE d.id = e.department_id
+);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣4️⃣ What is the difference between ANY and ALL?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>ANY:</strong> Returns TRUE if any of the subquery values meet the condition</li>
+                        <li><strong>ALL:</strong> Returns TRUE only if all subquery values meet the condition</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// ANY - salary greater than ANY salary in department 5</span>
+SELECT name, salary
+FROM employees
+WHERE salary > ANY (SELECT salary FROM employees WHERE department_id = 5);
+
+<span class="comment">// ALL - salary greater than ALL salaries in department 5</span>
+SELECT name, salary
+FROM employees
+WHERE salary > ALL (SELECT salary FROM employees WHERE department_id = 5);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣5️⃣ What is a Self-Join?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Self-Join is a join where a table is joined with itself. It's used to compare rows within the same table or to find hierarchical relationships.</p>
+                    <div class="code-block">
+<span class="comment">// Self-Join Example - Find employees with same manager</span>
+SELECT e1.name as employee, e2.name as manager
+FROM employees e1
+JOIN employees e2 ON e1.manager_id = e2.id;
+
+<span class="comment">// Self-Join - Find duplicate records</span>
+SELECT a.name, a.email
+FROM employees a
+JOIN employees b ON a.email = b.email AND a.id < b.id;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣6️⃣ What is the difference between NVL and COALESCE?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>NVL (Oracle)</th>
+                            <th>COALESCE (Standard SQL)</th>
+                        </tr>
+                        <tr>
+                            <td>Arguments</td>
+                            <td>Exactly 2 arguments</td>
+                            <td>Multiple arguments</td>
+                        </tr>
+                        <tr>
+                            <td>Data Type</td>
+                            <td>Returns first argument type</td>
+                            <td>Returns first non-NULL type</td>
+                        </tr>
+                        <tr>
+                            <td>Portability</td>
+                            <td>Oracle-specific</td>
+                            <td>Standard SQL, portable</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// NVL - Oracle specific</span>
+SELECT NVL(commission, 0) FROM employees;
+
+<span class="comment">// COALESCE - Standard SQL</span>
+SELECT COALESCE(commission, 0) FROM employees;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣7️⃣ What is the difference between DISTINCT and GROUP BY?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>DISTINCT:</strong> Removes duplicate rows from the result set</li>
+                        <li><strong>GROUP BY:</strong> Groups rows and can perform aggregate functions on each group</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// DISTINCT - removes duplicates</span>
+SELECT DISTINCT department_id FROM employees;
+
+<span class="comment">// GROUP BY - groups and can aggregate</span>
+SELECT department_id, COUNT(*)
+FROM employees
+GROUP BY department_id;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣8️⃣ What is the difference between RANK(), DENSE_RANK(), and ROW_NUMBER()?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <ul>
+                        <li><strong>ROW_NUMBER():</strong> Assigns unique sequential numbers (1, 2, 3, 4...)</li>
+                        <li><strong>RANK():</strong> Assigns rank with gaps for ties (1, 2, 2, 4...)</li>
+                        <li><strong>DENSE_RANK():</strong> Assigns rank without gaps for ties (1, 2, 2, 3...)</li>
+                    </ul>
+                    <div class="code-block">
+<span class="comment">// Window Functions Example</span>
+SELECT name, salary,
+       ROW_NUMBER() OVER (ORDER BY salary DESC) as row_num,
+       RANK() OVER (ORDER BY salary DESC) as rank,
+       DENSE_RANK() OVER (ORDER BY salary DESC) as dense_rank
+FROM employees;
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣9️⃣ What is a Composite Key?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p>A Composite Key is a primary key that consists of two or more columns to uniquely identify a row in a table. Used when a single column cannot uniquely identify records.</p>
+                    <div class="code-block">
+<span class="comment">// Composite Key Example</span>
+CREATE TABLE order_items (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    PRIMARY KEY (order_id, product_id)
+);
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>3️⃣0️⃣ What is the difference between CHAR and NCHAR?</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <table>
+                        <tr>
+                            <th>Feature</th>
+                            <th>CHAR</th>
+                            <th>NCHAR</th>
+                        </tr>
+                        <tr>
+                            <td>Character Set</td>
+                            <td>ASCII/ANSI characters</td>
+                            <td>Unicode characters (international)</td>
+                        </tr>
+                        <tr>
+                            <td>Storage</td>
+                            <td>1 byte per character</td>
+                            <td>2 bytes per character</td>
+                        </tr>
+                        <tr>
+                            <td>Use Case</td>
+                            <td>English text</td>
+                            <td>Multi-language support</td>
+                        </tr>
+                    </table>
+                    <div class="code-block">
+<span class="comment">// CHAR - ASCII characters</span>
+name CHAR(50);
+
+<span class="comment">// NCHAR - Unicode characters</span>
+name NCHAR(50);
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stored Procedures Section -->
+        <section class="section" data-category="stored-procedures">
+            <h2>Stored Procedures - Learning Guide (20 Examples)</h2>
+            <p style="margin-bottom: 20px; color: #666;">Learn Stored Procedures from basic to advanced. Each example builds on the previous one.</p>
+            
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣ Basic Stored Procedure - Simple SELECT</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Beginner</p>
+                    <p>This is the simplest stored procedure that just returns all employees. No parameters, no logic - just a basic SELECT statement wrapped in a procedure.</p>
+                    <div class="code-block">
+<span class="comment">// Creating the procedure</span>
+DELIMITER //
+CREATE PROCEDURE GetAllEmployees()
+BEGIN
+    SELECT * FROM employees;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL GetAllEmployees();
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>DELIMITER //</code> - Changes the delimiter to // so MySQL doesn't execute statements prematurely</li>
+                        <li><code>BEGIN...END</code> - Marks the start and end of the procedure body</li>
+                        <li><code>CALL GetAllEmployees()</code> - Executes the stored procedure</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣ Stored Procedure Single Parameter</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Beginner</p>
+                    <p>This procedure accepts a single parameter (department_id) and returns employees from that specific department.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE GetEmployeesByDepartment(IN dept_id INT)
+BEGIN
+    SELECT * FROM employees 
+    WHERE department_id = dept_id;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL GetEmployeesByDepartment(5);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>IN dept_id INT</code> - Input parameter of type INT</li>
+                        <li>The parameter is used in the WHERE clause to filter results</li>
+                        <li>IN parameters are read-only (cannot be modified inside the procedure)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>3️⃣ Stored Procedure Multiple Parameters</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Beginner</p>
+                    <p>This procedure accepts multiple parameters to filter employees by department and minimum salary.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE GetEmployeesByDeptAndSalary(
+    IN dept_id INT,
+    IN min_salary DECIMAL(10,2)
+)
+BEGIN
+    SELECT * FROM employees 
+    WHERE department_id = dept_id 
+    AND salary >= min_salary;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL GetEmployeesByDeptAndSalary(5, 50000);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li>Multiple parameters are separated by commas</li>
+                        <li>Each parameter has a name, direction (IN), and data type</li>
+                        <li>Parameters are used in the WHERE clause with AND condition</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>4️⃣ Stored Procedure with OUT Parameter</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Beginner</p>
+                    <p>This procedure counts employees in a department and returns the count using an OUT parameter.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE CountEmployeesByDepartment(
+    IN dept_id INT,
+    OUT emp_count INT
+)
+BEGIN
+    SELECT COUNT(*) INTO emp_count 
+    FROM employees 
+    WHERE department_id = dept_id;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL CountEmployeesByDepartment(5, @count);
+SELECT @count;
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>OUT emp_count INT</code> - Output parameter to return a value</li>
+                        <li><code>SELECT ... INTO</code> - Stores the result in the OUT parameter</li>
+                        <li><code>@count</code> - Session variable to receive the output</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>5️⃣ Stored Procedure with INOUT Parameter</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Beginner</p>
+                    <p>This procedure accepts a value, modifies it, and returns the modified value using INOUT parameter.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE IncrementSalary(INOUT salary DECIMAL(10,2))
+BEGIN
+    SET salary = salary * 1.10;  <span class="comment">// 10% increase</span>
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+SET @current_salary = 50000;
+CALL IncrementSalary(@current_salary);
+SELECT @current_salary;  <span class="comment">// Returns 55000</span>
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>INOUT</code> - Parameter can both receive and return a value</li>
+                        <li><code>SET</code> - Assigns a new value to the variable</li>
+                        <li>The original value is modified and returned</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>6️⃣ Stored Procedure with Local Variables</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure uses local variables to store intermediate calculations.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE CalculateSalaryStats(IN dept_id INT)
+BEGIN
+    DECLARE avg_salary DECIMAL(10,2);
+    DECLARE max_salary DECIMAL(10,2);
+    DECLARE min_salary DECIMAL(10,2);
+    
+    SELECT AVG(salary) INTO avg_salary 
+    FROM employees WHERE department_id = dept_id;
+    
+    SELECT MAX(salary) INTO max_salary 
+    FROM employees WHERE department_id = dept_id;
+    
+    SELECT MIN(salary) INTO min_salary 
+    FROM employees WHERE department_id = dept_id;
+    
+    SELECT avg_salary, max_salary, min_salary;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL CalculateSalaryStats(5);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>DECLARE</code> - Creates local variables within the procedure</li>
+                        <li>Variables are scoped only within the procedure</li>
+                        <li>Multiple calculations are stored in variables before returning</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>7️⃣ Stored Procedure with IF Statement</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure uses conditional logic to return different messages based on salary.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE CheckSalaryLevel(IN emp_id INT)
+BEGIN
+    DECLARE emp_salary DECIMAL(10,2);
+    
+    SELECT salary INTO emp_salary 
+    FROM employees WHERE id = emp_id;
+    
+    IF emp_salary > 100000 THEN
+        SELECT 'High Salary' as salary_level;
+    ELSEIF emp_salary > 50000 THEN
+        SELECT 'Medium Salary' as salary_level;
+    ELSE
+        SELECT 'Low Salary' as salary_level;
+    END IF;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL CheckSalaryLevel(1);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>IF...ELSEIF...ELSE...END IF</code> - Conditional statement</li>
+                        <li>Multiple conditions are checked in sequence</li>
+                        <li>Only one branch executes based on the condition</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>8️⃣ Stored Procedure with CASE Statement</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure uses CASE statement for cleaner conditional logic to categorize employees.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE CategorizeEmployees()
+BEGIN
+    SELECT id, name, salary,
+        CASE 
+            WHEN salary >= 100000 THEN 'Executive'
+            WHEN salary >= 70000 THEN 'Senior'
+            WHEN salary >= 50000 THEN 'Mid-Level'
+            ELSE 'Junior'
+        END as category
+    FROM employees;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL CategorizeEmployees();
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>CASE WHEN...THEN...ELSE...END</code> - Conditional expression</li>
+                        <li>CASE can be used in SELECT statements</li>
+                        <li>Cleaner alternative to IF for simple categorization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>9️⃣ Stored Procedure with WHILE Loop</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure uses a WHILE loop to generate a sequence of numbers.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE GenerateNumbers(IN max_num INT)
+BEGIN
+    DECLARE counter INT DEFAULT 1;
+    
+    WHILE counter <= max_num DO
+        SELECT counter as number;
+        SET counter = counter + 1;
+    END WHILE;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL GenerateNumbers(5);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>WHILE...DO...END WHILE</code> - Loop structure</li>
+                        <li><code>DECLARE...DEFAULT</code> - Initialize variable with default value</li>
+                        <li>Loop continues as long as condition is true</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>🔟 Stored Procedure with REPEAT Loop</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure uses REPEAT loop which always executes at least once.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE CountDown(IN start_num INT)
+BEGIN
+    DECLARE counter INT DEFAULT start_num;
+    
+    REPEAT
+        SELECT counter as countdown;
+        SET counter = counter - 1;
+    UNTIL counter = 0
+    END REPEAT;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL CountDown(5);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>REPEAT...UNTIL...END REPEAT</code> - Loop that runs until condition is true</li>
+                        <li>Always executes at least once (condition checked at end)</li>
+                        <li>Unlike WHILE, which checks condition before execution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣1️⃣ Stored Procedure with INSERT Operation</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure inserts a new employee into the database.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE AddEmployee(
+    IN emp_name VARCHAR(100),
+    IN emp_email VARCHAR(100),
+    IN emp_salary DECIMAL(10,2),
+    IN dept_id INT
+)
+BEGIN
+    INSERT INTO employees (name, email, salary, department_id, hire_date)
+    VALUES (emp_name, emp_email, emp_salary, dept_id, CURDATE());
+    
+    SELECT LAST_INSERT_ID() as new_employee_id;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL AddEmployee('John Doe', 'john@example.com', 60000, 5);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>INSERT INTO...VALUES</code> - Inserts new record</li>
+                        <li><code>CURDATE()</code> - Current date function</li>
+                        <li><code>LAST_INSERT_ID()</code> - Returns the auto-generated ID</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣2️⃣ Stored Procedure with UPDATE Operation</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure updates an employee's salary with validation.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE UpdateEmployeeSalary(
+    IN emp_id INT,
+    IN new_salary DECIMAL(10,2)
+)
+BEGIN
+    DECLARE current_salary DECIMAL(10,2);
+    
+    SELECT salary INTO current_salary 
+    FROM employees WHERE id = emp_id;
+    
+    IF new_salary > current_salary THEN
+        UPDATE employees 
+        SET salary = new_salary 
+        WHERE id = emp_id;
+        SELECT 'Salary updated successfully' as message;
+    ELSE
+        SELECT 'New salary must be higher than current salary' as message;
+    END IF;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL UpdateEmployeeSalary(1, 65000);
+                    </div>
+                    <p><strong>Explanation:</strong>
+                    <ul>
+                        <li>Validates the new salary before updating</li>
+                        <li>Only updates if new salary is higher</li>
+                        <li>Returns appropriate message based on validation</li>
+                    </ul></p>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣3️⃣ Stored Procedure with DELETE Operation</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Intermediate</p>
+                    <p>This procedure deletes an employee with safety checks.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE DeleteEmployee(IN emp_id INT)
+BEGIN
+    DECLARE emp_exists INT;
+    
+    SELECT COUNT(*) INTO emp_exists 
+    FROM employees WHERE id = emp_id;
+    
+    IF emp_exists > 0 THEN
+        DELETE FROM employees WHERE id = emp_id;
+        SELECT CONCAT('Employee ', emp_id, ' deleted successfully') as message;
+    ELSE
+        SELECT 'Employee not found' as message;
+    END IF;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL DeleteEmployee(1);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li>Checks if employee exists before deletion</li>
+                        <li>Prevents errors when deleting non-existent records</li>
+                        <li><code>CONCAT()</code> - Combines strings for the message</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣4️⃣ Stored Procedure with Transaction</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Advanced</p>
+                    <p>This procedure transfers money between accounts using transaction for data integrity.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE TransferMoney(
+    IN from_account INT,
+    IN to_account INT,
+    IN amount DECIMAL(10,2)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT 'Transaction failed and rolled back' as message;
+    END;
+    
+    START TRANSACTION;
+    
+    UPDATE accounts SET balance = balance - amount 
+    WHERE id = from_account;
+    
+    UPDATE accounts SET balance = balance + amount 
+    WHERE id = to_account;
+    
+    COMMIT;
+    SELECT 'Transaction completed successfully' as message;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL TransferMoney(1, 2, 1000);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>START TRANSACTION</code> - Begins a transaction</li>
+                        <li><code>COMMIT</code> - Saves changes permanently</li>
+                        <li><code>ROLLBACK</code> - Undoes changes if error occurs</li>
+                        <li><code>DECLARE EXIT HANDLER</code> - Error handling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣5️⃣ Stored Procedure with Cursor</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Advanced</p>
+                    <p>This procedure uses a cursor to process rows one by one and give a salary increase.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE GiveSalaryIncrease(IN dept_id INT, IN increase_percent DECIMAL(5,2))
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE emp_id INT;
+    DECLARE emp_salary DECIMAL(10,2);
+    
+    DECLARE emp_cursor CURSOR FOR 
+        SELECT id, salary FROM employees WHERE department_id = dept_id;
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    
+    OPEN emp_cursor;
+    
+    read_loop: LOOP
+        FETCH emp_cursor INTO emp_id, emp_salary;
+        
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+        
+        UPDATE employees 
+        SET salary = salary * (1 + increase_percent / 100)
+        WHERE id = emp_id;
+        
+        SELECT CONCAT('Updated employee ', emp_id) as status;
+    END LOOP;
+    
+    CLOSE emp_cursor;
+    SELECT 'Salary increase completed' as message;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL GiveSalaryIncrease(5, 10);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>DECLARE CURSOR</code> - Defines a cursor for row-by-row processing</li>
+                        <li><code>OPEN/FETCH/CLOSE</code> - Cursor operations</li>
+                        <li><code>LOOP...LEAVE</code> - Loop with exit condition</li>
+                        <li>Handler for NOT FOUND to exit loop when no more rows</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣6️⃣ Stored Procedure with Error Handling</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Advanced</p>
+                    <p>This procedure demonstrates comprehensive error handling.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE SafeInsertEmployee(
+    IN emp_name VARCHAR(100),
+    IN emp_email VARCHAR(100),
+    IN emp_salary DECIMAL(10,2)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        SELECT 'Error occurred during insertion' as error_message;
+    END;
+    
+    DECLARE EXIT HANDLER FOR 1062  <span class="comment">// Duplicate entry error</span>
+    BEGIN
+        SELECT 'Email already exists' as error_message;
+    END;
+    
+    IF emp_name IS NULL OR emp_name = '' THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Name cannot be empty';
+    END IF;
+    
+    IF emp_salary < 0 THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Salary cannot be negative';
+    END IF;
+    
+    INSERT INTO employees (name, email, salary, hire_date)
+    VALUES (emp_name, emp_email, emp_salary, CURDATE());
+    
+    SELECT 'Employee inserted successfully' as message;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL SafeInsertEmployee('Jane Doe', 'jane@example.com', 55000);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>DECLARE EXIT HANDLER</code> - Catches specific error codes</li>
+                        <li><code>SIGNAL SQLSTATE</code> - Raises custom errors</li>
+                        <li>Validation before database operation</li>
+                        <li>Multiple handlers for different error types</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣7️⃣ Stored Procedure with Dynamic SQL</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Advanced</p>
+                    <p>This procedure builds and executes SQL dynamically based on parameters.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE DynamicSearch(
+    IN search_column VARCHAR(50),
+    IN search_value VARCHAR(100)
+)
+BEGIN
+    DECLARE dynamic_query VARCHAR(500);
+    
+    SET dynamic_query = CONCAT(
+        'SELECT * FROM employees WHERE ',
+        search_column,
+        ' = ''',
+        search_value,
+        ''''
+    );
+    
+    SET @sql = dynamic_query;
+    PREPARE stmt FROM @sql;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL DynamicSearch('name', 'John Doe');
+CALL DynamicSearch('email', 'john@example.com');
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>CONCAT()</code> - Builds the SQL string dynamically</li>
+                        <li><code>PREPARE</code> - Prepares the dynamic SQL statement</li>
+                        <li><code>EXECUTE</code> - Executes the prepared statement</li>
+                        <li><code>DEALLOCATE PREPARE</code> - Releases resources</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣8️⃣ Stored Procedure with Temporary Table</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Advanced</p>
+                    <p>This procedure creates and uses a temporary table for complex calculations.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE CalculateDepartmentRankings()
+BEGIN
+    <span class="comment">// Create temporary table</span>
+    CREATE TEMPORARY TABLE IF NOT EXISTS temp_dept_stats (
+        department_id INT,
+        avg_salary DECIMAL(10,2),
+        employee_count INT
+    );
+    
+    <span class="comment">// Insert data into temporary table</span>
+    INSERT INTO temp_dept_stats
+    SELECT department_id, AVG(salary), COUNT(*)
+    FROM employees
+    GROUP BY department_id;
+    
+    <span class="comment">// Query with ranking</span>
+    SELECT department_id, avg_salary, employee_count,
+           RANK() OVER (ORDER BY avg_salary DESC) as salary_rank
+    FROM temp_dept_stats;
+    
+    <span class="comment">// Drop temporary table (optional, auto-dropped at session end)</span>
+    DROP TEMPORARY TABLE IF EXISTS temp_dept_stats;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL CalculateDepartmentRankings();
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li><code>CREATE TEMPORARY TABLE</code> - Creates table that exists only for the session</li>
+                        <li>Temporary tables are useful for complex multi-step operations</li>
+                        <li>Automatically dropped when session ends</li>
+                        <li>Can improve performance for complex queries</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>1️⃣9️⃣ Stored Procedure with Multiple Result Sets</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Advanced</p>
+                    <p>This procedure returns multiple result sets in a single call.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE GetDepartmentReport(IN dept_id INT)
+BEGIN
+    <span class="comment">// Result Set 1: Department info</span>
+    SELECT * FROM departments WHERE id = dept_id;
+    
+    <span class="comment">// Result Set 2: Employee list</span>
+    SELECT id, name, salary, hire_date 
+    FROM employees 
+    WHERE department_id = dept_id;
+    
+    <span class="comment">// Result Set 3: Salary statistics</span>
+    SELECT 
+        COUNT(*) as total_employees,
+        AVG(salary) as average_salary,
+        MAX(salary) as max_salary,
+        MIN(salary) as min_salary
+    FROM employees 
+    WHERE department_id = dept_id;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL GetDepartmentReport(5);
+                    </div>
+                    <p><strong>Explanation:</p>
+                    <ul>
+                        <li>Multiple SELECT statements return multiple result sets</li>
+                        <li>Useful for comprehensive reports</li>
+                        <li>Client applications can process each result set separately</li>
+                        <li>Reduces multiple database calls to a single call</li>
+                    </ul></p>
+                </div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-header">
+                    <h3>2️⃣0️⃣ Complex Stored Procedure - Complete Employee Management</h3>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="answer-content">
+                    <p><strong>Level:</strong> Expert</p>
+                    <p>This comprehensive procedure demonstrates all concepts: parameters, variables, conditions, loops, transactions, and error handling.</p>
+                    <div class="code-block">
+DELIMITER //
+CREATE PROCEDURE ProcessEmployeePromotion(
+    IN emp_id INT,
+    IN new_department_id INT,
+    IN salary_increase_percent DECIMAL(5,2)
+)
+BEGIN
+    <span class="comment">// Variables</span>
+    DECLARE current_dept_id INT;
+    DECLARE current_salary DECIMAL(10,2);
+    DECLARE new_salary DECIMAL(10,2);
+    DECLARE exit_handler BOOLEAN DEFAULT FALSE;
+    
+    <span class="comment">// Error handler</span>
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT 'Promotion failed - transaction rolled back' as result;
+        SET exit_handler = TRUE;
+    END;
+    
+    <span class="comment">// Validation</span>
+    IF emp_id IS NULL OR new_department_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Parameters cannot be NULL';
+    END IF;
+    
+    IF salary_increase_percent < 0 OR salary_increase_percent > 100 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid increase percentage';
+    END IF;
+    
+    <span class="comment">// Get current data</span>
+    SELECT department_id, salary INTO current_dept_id, current_salary
+    FROM employees WHERE id = emp_id;
+    
+    IF current_dept_id IS NULL THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Employee not found';
+    END IF;
+    
+    <span class="comment">// Calculate new salary</span>
+    SET new_salary = current_salary * (1 + salary_increase_percent / 100);
+    
+    <span class="comment">// Start transaction</span>
+    START TRANSACTION;
+    
+    <span class="comment">// Update employee</span>
+    UPDATE employees 
+    SET department_id = new_department_id,
+        salary = new_salary,
+        promotion_date = CURDATE()
+    WHERE id = emp_id;
+    
+    <span class="comment">// Log the promotion</span>
+    INSERT INTO promotion_history 
+    (employee_id, old_department_id, new_department_id, 
+     old_salary, new_salary, promotion_date)
+    VALUES (emp_id, current_dept_id, new_department_id, 
+            current_salary, new_salary, CURDATE());
+    
+    <span class="comment">// Commit if no errors</span>
+    IF exit_handler = FALSE THEN
+        COMMIT;
+        SELECT CONCAT('Employee ', emp_id, ' promoted successfully') as result;
+        SELECT new_salary as updated_salary;
+    END IF;
+END //
+DELIMITER ;
+
+<span class="comment">// Calling the procedure</span>
+CALL ProcessEmployeePromotion(1, 10, 15);
+                    </div>
+                    <p><strong>Explanation:</strong></p>
+                    <ul>
+                        <li>Comprehensive parameter validation</li>
+                        <li>Multiple variable declarations</li>
+                        <li>Transaction with rollback on error</li>
+                        <li>Multiple table updates in single transaction</li>
+                        <li>Audit trail logging</li>
+                        <li>Error handling with custom messages</li>
+                        <li>Returns success/failure status</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>📚 Java & Spring Boot Interview Preparation Guide</p>
+            <p>Created for comprehensive interview preparation with practical examples</p>
+        </footer>
+    </div>
+
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <script>
+        // Toggle question cards
+        document.querySelectorAll('.question-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const card = header.parentElement;
+                card.classList.toggle('active');
+            });
+        });
+
+        // Category filtering
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const category = btn.dataset.category;
+
+                document.querySelectorAll('.section').forEach(section => {
+                    if (category === 'all' || section.dataset.category === category) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            document.querySelectorAll('.question-card').forEach(card => {
+                const questionText = card.querySelector('h3').textContent.toLowerCase();
+                const answerText = card.querySelector('.answer-content').textContent.toLowerCase();
+
+                if (questionText.includes(searchTerm) || answerText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.classList.add('active'); // Auto-expand matching cards
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('active');
+                }
+            });
+
+            // Show all sections when searching
+            if (searchTerm.length > 0) {
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = 'block';
+                });
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            } else {
+                // Reset to active category
+                const activeBtn = document.querySelector('.category-btn.active');
+                if (activeBtn) {
+                    activeBtn.click();
+                }
+            }
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
